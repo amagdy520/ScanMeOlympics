@@ -5,4 +5,9 @@ package com.scan.me;
  */
 
 public class User {
+    String email;
+    String uid;
+    String year;
+    String image;
+
 }
