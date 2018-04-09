@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.scan.me.HomeScreen.HomeActivity;
+import com.scan.me.HomeScreen.Home;
 import com.scan.me.R;
 
 import static android.content.ContentValues.TAG;
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 //CHECKING USER PRESENCE
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if ((user != null)) {
-                    Intent mAccount = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent mAccount = new Intent(LoginActivity.this, Home.class);
                     startActivity(mAccount);
                 }
             }
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(LoginActivity.this, "Login user Successfully!", Toast.LENGTH_SHORT).show();
                                                 progressDialog.dismiss();
-                                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this,Home.class);
                                                 startActivity(intent);
                                             }else{
                                                 Toast.makeText(LoginActivity.this, "Unable to login user", Toast.LENGTH_SHORT).show();

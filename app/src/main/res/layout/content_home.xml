@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.scan.me.Home"
+    tools:context="com.scan.me.HomeScreen.Home"
     tools:showIn="@layout/activity_home">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
-        android:id="@+id/hall_list"
+        android:id="@+id/tab_layout"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>
