@@ -16,11 +16,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.scan.me.AddRoom;
 import com.scan.me.AddUser;
 import com.scan.me.Data;
 import com.scan.me.R;
-import com.scan.me.User;
+import com.scan.me.User.User;
+import com.scan.me.User.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,9 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 users = new ArrayList<>();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    users.add(userSnapshot.getValue(User.class));
+                    User user=userSnapshot.getValue(User.class);
+                    user.setId(userSnapshot.getKey());
+                    users.add(user);
                 }
                 setUserAdapter();
 
@@ -87,6 +89,12 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
 
     @Override
     public void onUserClicked(int position) {
+        User user=users.get(position);
+        Intent intent=new Intent(getActivity(),UserDetails.class);
+        Bundle bundle=new Bundle();
+        bundle.putString(UserDetails.USER_ID,user.getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 }

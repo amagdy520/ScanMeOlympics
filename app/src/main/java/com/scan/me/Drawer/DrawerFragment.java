@@ -1,11 +1,8 @@
 package com.scan.me.Drawer;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,11 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.scan.me.R;
-import com.scan.me.User;
+import com.scan.me.User.User;
 
 import java.util.ArrayList;
 import java.util.List;

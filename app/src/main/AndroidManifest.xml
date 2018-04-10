@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.scan.me">
+    package="com.scan.me">
 
     <application
         android:allowBackup="true"
@@ -10,30 +10,29 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".HomeScreen.Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".LoginScreen.LoginActivity"/>
-        <activity android:name=".AddRoom"/>
-        <activity android:name=".AddUser"/>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".LoginScreen.LoginActivity" />
+        <activity android:name=".AddRoom" />
+        <activity android:name=".AddUser" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupScreen.Signup">
-        </activity>
+        <activity android:name=".SignupScreen.Signup"></activity>
+        <activity android:name=".User.UserDetails"></activity>
     </application>
 
 </manifest>

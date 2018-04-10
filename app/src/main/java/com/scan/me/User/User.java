@@ -1,4 +1,4 @@
-package com.scan.me;
+package com.scan.me.User;
 
 /**
  * Created by mido on 09/04/18.
@@ -8,7 +8,7 @@ public class User {
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
-    private String email, name, uid, mac, year, department, section, image, type, hash, code, number;
+    private String email, name, uid, mac, year, department, section, image, type, hash, code, number,id;
     long codeTime;
 
     public User() {
@@ -26,6 +26,14 @@ public class User {
         this.type = type;
         this.hash = hash;
         this.number = number;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {

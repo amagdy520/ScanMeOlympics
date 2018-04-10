@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scan.me.HomeScreen.Home;
 import com.scan.me.R;
+import com.scan.me.SignupScreen.Signup;
+
+import butterknife.OnClick;
 
 import static android.content.ContentValues.TAG;
 
@@ -32,6 +35,10 @@ public class LoginActivity extends AppCompatActivity {
     private String mEmail, mPassword;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+    public static final int SIGN_UP = 1;
+    public static final String EMAIL="Email";
+    public static final String PASSWORD="Password";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +77,15 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         mPasswordInput.setError(null);
                     }
-                }else {
+                } else {
                     Login(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
                 }
             }
         });
     }
+
     public void Login(String e, String p) {
-        Log.d(TAG, "Login");
+
 
         final String email = e;
         final String password = p;
@@ -99,9 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(LoginActivity.this, "Login user Successfully!", Toast.LENGTH_SHORT).show();
                                                 progressDialog.dismiss();
-                                                Intent intent = new Intent(LoginActivity.this,Home.class);
+                                                Intent intent = new Intent(LoginActivity.this, Home.class);
                                                 startActivity(intent);
-                                            }else{
+                                            } else {
                                                 Toast.makeText(LoginActivity.this, "Unable to login user", Toast.LENGTH_SHORT).show();
                                                 progressDialog.dismiss();
                                             }
@@ -113,5 +121,21 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }, 500);
+    }
+
+
+    public void signUp(View view) {
+        Intent intent = new Intent(this, Signup.class);
+        startActivityForResult(intent, SIGN_UP);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_UP && resultCode == RESULT_OK) {
+            String email=data.getExtras().getString(EMAIL);
+            String password=data.getExtras().getString(PASSWORD);
+            Login(email,password);
+        }
     }
 }

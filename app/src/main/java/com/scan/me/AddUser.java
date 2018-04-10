@@ -14,9 +14,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.scan.me.User.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -120,20 +120,25 @@ public class AddUser extends AppCompatActivity {
 
     @OnClick(R.id.done)
     void createUser() {
-        String type;
-        if(typeRadioGroup.getCheckedRadioButtonId()==R.id.student){
-            type=User.STUDENT;
-        }else if(typeRadioGroup.getCheckedRadioButtonId()==R.id.admin){
-            type=User.ADMIN;
-        }else {
-            type=User.TUTOR;
-        }
         String year = yearAutoCompleteTextView.getText().toString();
         String department = departmentAutoCompleteTextView.getText().toString();
         String name = nameEditText.getText().toString();
         String number = nameEditText.getText().toString();
         String section = numberEditText.getText().toString();
-        String hash = year + "-" + department + "-" + section;
+        String type;
+        String hash;
+        if(typeRadioGroup.getCheckedRadioButtonId()==R.id.student){
+            type= User.STUDENT;
+             hash = year + "-" + department + "-" + section;
+
+        }else if(typeRadioGroup.getCheckedRadioButtonId()==R.id.admin){
+            type=User.ADMIN;
+            hash=type;
+        }else {
+            type=User.TUTOR;
+            hash=type;
+        }
+
 
         User user =
                 new User(null,

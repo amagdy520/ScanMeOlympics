@@ -8,7 +8,7 @@ public class Room
 {
     public static final String HALL = "hall";
     public static final String LAB = "lab";
-    private String id, number, type;
+    private String id, number, type,floor;
     private double latitude, longitude;
 
     public Room(String number, String type, double latitude, double longitude) {

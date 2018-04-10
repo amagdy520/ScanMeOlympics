@@ -60,5 +60,16 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Sign Up"
+            android:onClick="signUp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 </RelativeLayout>

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scan.me.R;
-import com.scan.me.User;
+import com.scan.me.User.User;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
         }
     }
 
-    interface OnUserClickListener {
+    public interface OnUserClickListener {
         void onUserClicked(int position);
     }
 }
