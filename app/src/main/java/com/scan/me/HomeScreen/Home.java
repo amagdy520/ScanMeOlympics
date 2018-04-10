@@ -50,8 +50,10 @@ public class Home extends AppCompatActivity {
 
     private void setTabLayout(User user) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RoomsFragment(),"Rooms");
-        adapter.addFragment(new UserFragment(),"Users");
+//        if(user.getType().equals(User.ADMIN)){
+            adapter.addFragment(new RoomsFragment(),"Rooms");
+            adapter.addFragment(new UserFragment(),"Users");
+//        }
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#FF4081"));

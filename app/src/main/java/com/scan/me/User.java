@@ -8,14 +8,18 @@ public class User {
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
-    private String email, name, uid, year, image, type;
+    private String email, name, uid,mac ,year, department,section,image, type,hash;
 
-    public User(String email, String name, String year, String image, String type) {
+    public User(String email, String name, String uid, String mac, String year, String department, String section, String type, String hash) {
         this.email = email;
         this.name = name;
+        this.uid = uid;
+        this.mac = mac;
         this.year = year;
-        this.image = image;
+        this.department = department;
+        this.section = section;
         this.type = type;
+        this.hash = hash;
     }
 
     public String getEmail() {
@@ -42,12 +46,36 @@ public class User {
         this.uid = uid;
     }
 
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
     public String getYear() {
         return year;
     }
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 
     public String getImage() {
@@ -64,5 +92,13 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }
