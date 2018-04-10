@@ -8,9 +8,10 @@ public class User {
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
-    private String email, name, uid,mac ,year, department,section,image, type,hash;
+    private String email, name, uid, mac, year, department, section, image, type, hash, code,number;
+    long codeTime;
 
-    public User(String email, String name, String uid, String mac, String year, String department, String section, String type, String hash) {
+    public User(String email, String name,String number, String uid, String mac, String year, String department, String section, String type, String hash) {
         this.email = email;
         this.name = name;
         this.uid = uid;
@@ -20,10 +21,27 @@ public class User {
         this.section = section;
         this.type = type;
         this.hash = hash;
+        this.number=number;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public long getCodeTime() {
+        return codeTime;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setCodeTime(long codeTime) {
+        this.codeTime = codeTime;
     }
 
     public void setEmail(String email) {

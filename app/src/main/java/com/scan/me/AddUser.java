@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +35,8 @@ public class AddUser extends AppCompatActivity {
     EditText numberEditText;
     @BindView(R.id.user_name)
     EditText nameEditText;
+    @BindView(R.id.user_type)
+    RadioGroup typeRadioGroup;
 
     List<String> years = new ArrayList<>();
     List<String> departments = new ArrayList<>();
@@ -44,6 +47,27 @@ public class AddUser extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
         ButterKnife.bind(this);
         getDataYearsData();
+        radioChangeListener();
+    }
+
+    private void radioChangeListener() {
+        typeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.student){
+                    yearAutoCompleteTextView.setVisibility(View.VISIBLE);
+                    sectionEditText.setVisibility(View.VISIBLE);
+                    departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
+                    numberEditText.setVisibility(View.VISIBLE);
+                }else {
+                    yearAutoCompleteTextView.setVisibility(View.GONE);
+                    sectionEditText.setVisibility(View.GONE);
+                    departmentAutoCompleteTextView.setVisibility(View.GONE);
+                    numberEditText.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     private void getDataYearsData() {
@@ -79,11 +103,12 @@ public class AddUser extends AppCompatActivity {
         departmentAutoCompleteTextView.setAdapter(departmentAdapter);
         setOnClick(yearAutoCompleteTextView);
         setOnClick(departmentAutoCompleteTextView);
-        Log.e("Size",years.size()+"");
+        Log.e("Size", years.size() + "");
 
 
     }
-    void setOnClick(final AutoCompleteTextView autoCompleteTextView){
+
+    void setOnClick(final AutoCompleteTextView autoCompleteTextView) {
         autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,11 +120,27 @@ public class AddUser extends AppCompatActivity {
 
     @OnClick(R.id.done)
     void createUser() {
-        String year=yearAutoCompleteTextView.getText().toString();
-        String depratment=departmentAutoCompleteTextView.getText().toString();
-        String name=nameEditText.getText().toString();
-        String number=nameEditText.getText().toString();
-        String section=nameEditText.getText().toString();
+        String type;
+        if(typeRadioGroup.getCheckedRadioButtonId()==R.id.student){
+            type=User.STUDENT;
+        }else if(typeRadioGroup.getCheckedRadioButtonId()==R.id.admin){
+            type=User.ADMIN;
+        }else {
+            type=User.TUTOR;
+        }
+        String year = yearAutoCompleteTextView.getText().toString();
+        String department = departmentAutoCompleteTextView.getText().toString();
+        String name = nameEditText.getText().toString();
+        String number = nameEditText.getText().toString();
+        String section = nameEditText.getText().toString();
+        String hash = year + "-" + department + "-" + section;
+
+        User user =
+                new User(null,
+                        name, number,null, null, year, department, section,type , hash);
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
+        reference.child(Data.USERS).push().setValue(user);
+
 
 
     }
