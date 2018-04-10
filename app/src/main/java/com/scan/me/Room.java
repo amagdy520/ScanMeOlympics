@@ -7,11 +7,11 @@ package com.scan.me;
 public class Room {
     public static final String HALL = "hall";
     public static final String LAB = "lab";
-    private String id, name, type;
+    private String id, number, type;
     private double latitude, longitude;
 
-    public Room(String name, String type, double latitude, double longitude) {
-        this.name = name;
+    public Room(String number, String type, double latitude, double longitude) {
+        this.number = number;
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -25,12 +25,12 @@ public class Room {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getType() {

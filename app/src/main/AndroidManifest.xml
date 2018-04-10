@@ -26,6 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginScreen.LoginActivity" />
+        <activity android:name=".AddRoom" />
+        <activity android:name=".AddUser"></activity>
     </application>
 
 </manifest>

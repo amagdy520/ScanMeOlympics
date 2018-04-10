@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "143833475540",
+    "firebase_url": "https://bfciapp-cd482.firebaseio.com",
+    "project_id": "bfciapp-cd482",
+    "storage_bucket": "bfciapp-cd482.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143833475540:android:c4e6805f44a0f28a",
+        "android_client_info": {
+          "package_name": "com.scan.me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143833475540-fr9uv24c93a42kqnua65mt2uiv6de21a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXu8ekiYDMgeO4nyIb4YifhU9itfVkkfY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

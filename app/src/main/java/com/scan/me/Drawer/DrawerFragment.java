@@ -108,7 +108,7 @@ public class DrawerFragment extends Fragment {
 //                    .into(this.image);
 //
 //        }
-//        this.name.setText(userData.getName());
+//        this.name.setText(userData.getNumber());
 
     }
 
