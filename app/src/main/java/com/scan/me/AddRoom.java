@@ -43,6 +43,7 @@ public class AddRoom extends AppCompatActivity
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(Data.ROOMS).push().setValue(new Room(number,
                 type, Double.parseDouble(latitude), Double.parseDouble(longitude)));
+        finish();
 
     }
 

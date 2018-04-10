@@ -7,4 +7,5 @@ package com.scan.me;
 public class Data {
     public static final String ROOMS="Rooms";
     public static final String USERS="Users";
+    public static final String YEARS="Years";
 }
