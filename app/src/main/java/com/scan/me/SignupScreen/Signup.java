@@ -126,6 +126,10 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
             String department = departmentAutoCompleteTextView.getText().toString();
             String section = sectionEditText.getText().toString();
             hash = year + "-" + department + "-" + section;
+        }else if(radioGroup.getCheckedRadioButtonId() == R.id.admin){
+            hash=User.ADMIN;
+        }else {
+            hash=User.TUTOR;
         }
 
         reference.child(Data.USERS).orderByChild("hash").equalTo(hash).addListenerForSingleValueEvent(new ValueEventListener() {
