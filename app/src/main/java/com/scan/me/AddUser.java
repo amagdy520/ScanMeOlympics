@@ -132,16 +132,16 @@ public class AddUser extends AppCompatActivity {
         String department = departmentAutoCompleteTextView.getText().toString();
         String name = nameEditText.getText().toString();
         String number = nameEditText.getText().toString();
-        String section = nameEditText.getText().toString();
+        String section = numberEditText.getText().toString();
         String hash = year + "-" + department + "-" + section;
 
         User user =
                 new User(null,
                         name, number,null, null, year, department, section,type , hash);
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
+        reference.keepSynced(true);
         reference.child(Data.USERS).push().setValue(user);
-
-
+        finish();
 
     }
 }

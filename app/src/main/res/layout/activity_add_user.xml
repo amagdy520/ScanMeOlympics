@@ -17,6 +17,7 @@
             <RadioGroup
                 android:id="@+id/user_type"
                 android:layout_width="match_parent"
+                android:checkedButton="@id/student"
                 android:layout_height="wrap_content">
                 <RadioButton
                     android:id="@+id/admin"
