@@ -11,7 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddRoom extends AppCompatActivity {
+public class AddRoom extends AppCompatActivity
+{
 
     @BindView(R.id.room_number)
     EditText roomNumberEditText;
@@ -23,7 +24,8 @@ public class AddRoom extends AppCompatActivity {
     EditText longitudeEditText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         ButterKnife.bind(this);
@@ -31,7 +33,8 @@ public class AddRoom extends AppCompatActivity {
     }
 
     @OnClick(R.id.done)
-    void done() {
+    void done()
+    {
         String number = roomNumberEditText.getText().toString();
         String type = typeEditText.getText().toString();
         String longitude = longitudeEditText.getText().toString();

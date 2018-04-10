@@ -4,7 +4,8 @@ package com.scan.me;
  * Created by mido on 09/04/18.
  */
 
-public class Room {
+public class Room
+{
     public static final String HALL = "hall";
     public static final String LAB = "lab";
     private String id, number, type;
