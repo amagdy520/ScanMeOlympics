@@ -111,11 +111,6 @@
                     android:inputType="text"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
-
-
-
-
-
         </LinearLayout>
 
     </ScrollView>

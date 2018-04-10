@@ -13,7 +13,6 @@ import butterknife.OnClick;
 
 public class AddRoom extends AppCompatActivity
 {
-
     @BindView(R.id.room_number)
     EditText roomNumberEditText;
     @BindView(R.id.type)
@@ -29,7 +28,6 @@ public class AddRoom extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         ButterKnife.bind(this);
-
     }
 
     @OnClick(R.id.done)

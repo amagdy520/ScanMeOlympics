@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.scan.me.SignupScreen.Signup"
+    android:orientation="vertical">
+
+
+    <RadioGroup
+        android:id="@+id/singup_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/singup_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin"/>
+
+        <RadioButton
+            android:id="@+id/singup_tutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tutor"/>
+
+        <RadioButton
+            android:id="@+id/singup_student"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student"
+            android:checked="true"
+            />
+    </RadioGroup>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Year">
+
+        <AutoCompleteTextView
+            android:id="@+id/signup_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:focusableInTouchMode="false"
+            android:textColorHint="#fff"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Department">
+
+        <AutoCompleteTextView
+            android:id="@+id/signup_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:focusableInTouchMode="false"
+            android:textColorHint="#fff"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Section">
+
+        <EditText
+            android:id="@+id/signup_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:textColorHint="#fff" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/choose_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEARCH"
+        />
+
+</LinearLayout>
