@@ -20,7 +20,7 @@ public class SplashScreen extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                 } else {
