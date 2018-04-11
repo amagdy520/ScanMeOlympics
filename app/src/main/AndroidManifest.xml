@@ -18,7 +18,7 @@
         <activity
             android:name=".HomeScreen.Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginScreen.LoginActivity" />
         <activity android:name=".AddRoom" />
         <activity android:name=".AddUser" />
@@ -31,8 +31,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupScreen.Signup"></activity>
-        <activity android:name=".User.UserDetails"></activity>
+        <activity android:name=".SignupScreen.Signup" />
+        <activity android:name=".User.UserDetails" />
+        <activity android:name=".RoomDetails" />
+        <activity android:name=".ReserveActivity" />
+        <activity android:name=".LectureDetails"></activity>
     </application>
 
 </manifest>

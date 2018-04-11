@@ -1,5 +1,6 @@
 package com.scan.me.HomeScreen;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,8 +11,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.scan.me.Data;
 import com.scan.me.Drawer.DrawerFragment;
+import com.scan.me.LecturesFragment;
+import com.scan.me.LoginScreen.LoginActivity;
 import com.scan.me.R;
 import com.scan.me.User.User;
 
@@ -23,12 +35,13 @@ import butterknife.ButterKnife;
 
 public class Home extends AppCompatActivity {
 
-//    @BindView(R.id.fab)
+    //    @BindView(R.id.fab)
 //    FloatingActionButton floatingActionButton;
     @BindView(R.id.pager)
     ViewPager mViewPager;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +52,59 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setDrawerLayout();
-        setTabLayout(null);
-
+        getUserData();
 
 
     }
 
+    private void getUserData() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.keepSynced(true);
+        reference.child(Data.USERS).orderByChild("uid").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("Data", dataSnapshot.toString());
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    user = snapshot.getValue(User.class);
+                }
+                setTabLayout(user);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void setTabLayout(User user) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-//        if(user.getType().equals(User.ADMIN)){
-            adapter.addFragment(new RoomsFragment(),"Rooms");
-            adapter.addFragment(new UserFragment(),"Users");
-//        }
+        if (user.getType().equals(User.ADMIN)) {
+            RoomsFragment roomsFragment = new RoomsFragment();
+            roomsFragment.setUser(user);
+            UserFragment userFragment = new UserFragment();
+            userFragment.setUser(user);
+            adapter.addFragment(roomsFragment, "Rooms");
+            adapter.addFragment(userFragment, "Users");
+        } else if (user.getType().equals(User.TUTOR)) {
+            RoomsFragment roomsFragment = new RoomsFragment();
+            roomsFragment.setUser(user);
+            LecturesFragment lecturesFragment = new LecturesFragment();
+            lecturesFragment.setUser(user);
+            adapter.addFragment(roomsFragment, "Rooms");
+            adapter.addFragment(lecturesFragment, "Lectures");
+        } else {
+            LecturesFragment lecturesFragment = new LecturesFragment();
+            lecturesFragment.setUser(user);
+            adapter.addFragment(lecturesFragment, "Lectures");
+        }
         mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#FF4081"));
+//        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#01d277"));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -69,8 +120,6 @@ public class Home extends AppCompatActivity {
         drawerFragment.setUpDrawer(drawerLayout, toolbar);
 
     }
-
-
 
 
     class PagerAdapter extends FragmentPagerAdapter {

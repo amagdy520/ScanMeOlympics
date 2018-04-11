@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()){
                     user= snapshot.getValue(User.class);
                 }
-                Log.e("User",user.getName());
+
                 if (user.getMac().equals(getMacAddress())) {
                     Toast.makeText(LoginActivity.this, "Login user Successfully!", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();

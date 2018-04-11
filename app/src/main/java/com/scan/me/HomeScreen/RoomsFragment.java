@@ -22,6 +22,7 @@ import com.scan.me.AddRoom;
 import com.scan.me.Data;
 import com.scan.me.R;
 import com.scan.me.Room;
+import com.scan.me.RoomDetails;
 import com.scan.me.User.User;
 import com.scan.me.User.UserDetails;
 
@@ -32,13 +33,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RoomsFragment extends Fragment
-{
+public class RoomsFragment extends Fragment implements RoomsAdapter.OnRoomClickListener {
     @BindView (R.id.floating_room)
     FloatingActionButton floating_room;
     @BindView(R.id.room_recycler)
     RecyclerView roomsRecyclerView;
     List<Room> rooms = new ArrayList<> ();
+    User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public RoomsFragment()
     {}
@@ -81,7 +86,7 @@ public class RoomsFragment extends Fragment
 
     private void setRoomAdapter()
     {
-        RoomsAdapter roomsAdapter = new RoomsAdapter(getActivity(), rooms);
+        RoomsAdapter roomsAdapter = new RoomsAdapter(getActivity(), rooms,this);
         roomsRecyclerView.setAdapter(roomsAdapter);
         roomsRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
     }
@@ -91,5 +96,17 @@ public class RoomsFragment extends Fragment
     {
         Intent intent = new Intent (getActivity (), AddRoom.class);
         startActivity (intent);
+    }
+
+    @Override
+    public void onRoomClicked(int position) {
+        Room  room=rooms.get(position);
+        Intent intent=new Intent(getActivity(),RoomDetails.class);
+        Bundle bundle=new Bundle();
+        bundle.putString(RoomDetails.ROOM_ID,room.getId());
+        bundle.putParcelable(RoomDetails.USER,user);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
 }

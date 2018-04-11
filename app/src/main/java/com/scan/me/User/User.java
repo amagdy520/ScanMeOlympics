@@ -1,10 +1,13 @@
 package com.scan.me.User;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mido on 09/04/18.
  */
 
-public class User {
+public class User implements Parcelable {
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
@@ -27,6 +30,35 @@ public class User {
         this.hash = hash;
         this.number = number;
     }
+
+    protected User(Parcel in) {
+        email = in.readString();
+        name = in.readString();
+        uid = in.readString();
+        mac = in.readString();
+        year = in.readString();
+        department = in.readString();
+        section = in.readString();
+        image = in.readString();
+        type = in.readString();
+        hash = in.readString();
+        code = in.readString();
+        number = in.readString();
+        id = in.readString();
+        codeTime = in.readLong();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -130,5 +162,28 @@ public class User {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(email);
+        dest.writeString(name);
+        dest.writeString(uid);
+        dest.writeString(mac);
+        dest.writeString(year);
+        dest.writeString(department);
+        dest.writeString(section);
+        dest.writeString(image);
+        dest.writeString(type);
+        dest.writeString(hash);
+        dest.writeString(code);
+        dest.writeString(number);
+        dest.writeString(id);
+        dest.writeLong(codeTime);
     }
 }

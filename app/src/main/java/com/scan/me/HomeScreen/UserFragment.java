@@ -36,6 +36,11 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
     List<User> users = new ArrayList<>();
     @BindView(R.id.users_recycler)
     RecyclerView userRecyclerView;
+    User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public UserFragment()
     {}

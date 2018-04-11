@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.scan.me.R;
 import com.scan.me.User.User;
+import com.scan.me.UserAttend;
 
 import java.util.List;
 
@@ -45,19 +47,19 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView name, type;
+        TextView name,type;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             name= (TextView) itemView.findViewById(R.id.user_name);
             type= (TextView) itemView.findViewById(R.id.user_type);
-            itemView.setOnClickListener(this);
+
 
         }
         void bind(int position){
             User user=userList.get(position);
             name.setText(user.getName());
-            type.setText(user.getType());
+
         }
 
         @Override

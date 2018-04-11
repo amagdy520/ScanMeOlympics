@@ -18,53 +18,57 @@ import java.util.List;
  * Created by COYG on 2018/04/11.
  */
 
-public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder>
-{
-    List<Room> roomList;
+public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder> {
     Context context;
+    List<Room> roomList;
+    OnRoomClickListener mOnRoomClickListener;
 
-    public RoomsAdapter(Context context, List<Room> roomList)
-    {
-        this.roomList = roomList;
+
+    public RoomsAdapter(Context context, List<Room> roomList, OnRoomClickListener mOnRoomClickListener) {
         this.context = context;
+        this.roomList = roomList;
+        this.mOnRoomClickListener = mOnRoomClickListener;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.user_row, parent, false);
-        return new RoomsAdapter.MyViewHolder (view);
+        return new RoomsAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position)
-    {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.bind(position);
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return roomList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView number,type;
 
-        public MyViewHolder(View itemView)
-        {
-            super (itemView);
-            type= (TextView) itemView.findViewById(R.id.user_name);
-            number= (TextView) itemView.findViewById(R.id.user_type);
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView number, type;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            type = (TextView) itemView.findViewById(R.id.user_name);
+            number = (TextView) itemView.findViewById(R.id.user_type);
+            itemView.setOnClickListener(this);
         }
 
-        void bind(int position)
-        {
-            Room room=roomList.get(position);
-            type.setText(room.getType ());
-            number.setText(room.getNumber ());
+        void bind(int position) {
+            Room room = roomList.get(position);
+            type.setText(room.getType());
+            number.setText(room.getNumber());
         }
 
+        @Override
+        public void onClick(View v) {
+            mOnRoomClickListener.onRoomClicked(getAdapterPosition());
+        }
+    }
+    interface OnRoomClickListener{
+        void onRoomClicked(int position);
     }
 }
