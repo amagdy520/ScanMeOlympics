@@ -113,5 +113,6 @@ public class LecturesFragment extends Fragment implements LecturesAdapter.OnLect
         startActivity(intent);
 
 
+
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +55,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         ButterKnife.bind(this);
         lectureId = getIntent().getExtras().getString(LECTURE_ID);
         userType = getIntent().getExtras().getString(USER_TYPE);
+        Log.e("Type",userType);
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
@@ -146,7 +148,9 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
     }
 
     @Override
-    public void onSwitchClicked(final int position, final boolean isChecked) {
+    public void onSwitchClicked(final int position) {
+        final boolean  isChecked=!userAttends.get(position).isAttend();
+        setUserRecycler();
       if(userType.equals(User.TUTOR)){
           UserAttend userAttend = userAttends.get(position);
           DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -170,6 +174,8 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
                               child(Data.STUDENTS).child(userAttend.getId()).child("attend").setValue(isChecked);
                   }else {
                       Toast.makeText(LectureDetails.this, "Wrong Code", Toast.LENGTH_SHORT).show();
+
+
                   }
                   dialog.dismiss();
               }

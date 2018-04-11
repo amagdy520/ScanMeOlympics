@@ -53,7 +53,7 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHold
         return userList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    class MyViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         TextView nameTextView;
         Switch attendASwitch;
 
@@ -62,9 +62,11 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHold
             nameTextView = (TextView) itemView.findViewById(R.id.user_name);
             attendASwitch = (Switch) itemView.findViewById(R.id.attend);
             if (userType.equals(User.TUTOR)) {
-                attendASwitch.setOnCheckedChangeListener(this);
+                attendASwitch.setOnClickListener(this);
             } else if (attend && userType.equals(User.STUDENT)) {
-                attendASwitch.setOnCheckedChangeListener(this);
+                attendASwitch.setOnClickListener(this);
+            }else {
+                attendASwitch.setClickable(false);
             }
 
 
@@ -81,11 +83,16 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHold
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            mOnUserClickListener.onSwitchClicked(getAdapterPosition(),isChecked);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            mOnUserClickListener.onSwitchClicked(getAdapterPosition());
         }
     }
 
     public interface OnUserClickListener {
-        void onSwitchClicked(int position,boolean isChecked);
+        void onSwitchClicked(int position);
     }
 }
