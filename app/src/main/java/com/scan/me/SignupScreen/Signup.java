@@ -179,6 +179,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     @OnClick(R.id.sign_up)
     void signUp()
     {
+        // TODO : Add Validation
         String email=emailEditText.getText().toString();
         String password=passwordEditText.getText().toString();
         String confPassword=confPasswordEditText.getText().toString();
