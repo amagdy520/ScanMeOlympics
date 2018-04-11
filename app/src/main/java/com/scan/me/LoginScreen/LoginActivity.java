@@ -27,8 +27,8 @@ import butterknife.OnClick;
 import static android.content.ContentValues.TAG;
 
 
-public class LoginActivity extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity
+{
     private EditText mEmailInput, mPasswordInput;
     private TextInputLayout mEmailInputLayout, mPasswordInputLayout;
     private Button mLogin;
@@ -40,16 +40,20 @@ public class LoginActivity extends AppCompatActivity {
     public static final String PASSWORD="Password";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener()
+        {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
                 //CHECKING USER PRESENCE
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if ((user != null)) {
+                if ((user != null))
+                {
                     Intent mAccount = new Intent(LoginActivity.this, Home.class);
                     startActivity(mAccount);
                 }

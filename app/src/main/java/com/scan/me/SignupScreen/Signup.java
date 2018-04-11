@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -39,7 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Signup extends Activity implements UsersAdapter.OnUserClickListener {
+public class Signup extends Activity implements UsersAdapter.OnUserClickListener
+{
     @BindView(R.id.signup_year)
     AutoCompleteTextView yearAutoCompleteTextView;
     @BindView(R.id.signup_department)
@@ -58,6 +60,9 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     EditText passwordEditText;
     @BindView(R.id.conf_password)
     EditText confPasswordEditText;
+    @BindView (R.id.choose_user)
+    Button choose_user;
+
 
     List<String> years = new ArrayList<>();
     List<String> departments = new ArrayList<>();
@@ -67,7 +72,8 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
@@ -75,28 +81,35 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         getYearData();
     }
 
-    private void getYearData() {
+    private void getYearData()
+    {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(Data.DATA).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(Data.DATA).addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot yearDataSnapshot : dataSnapshot.child(Data.YEARS).getChildren()) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot yearDataSnapshot : dataSnapshot.child(Data.YEARS).getChildren())
+                {
                     years.add(yearDataSnapshot.getKey());
                 }
-                for (DataSnapshot departmentSnapshot : dataSnapshot.child(Data.DEPARTMENTS).getChildren()) {
+                for (DataSnapshot departmentSnapshot : dataSnapshot.child(Data.DEPARTMENTS).getChildren())
+                {
                     departments.add(departmentSnapshot.getKey());
                 }
                 setDataToAutoComplete();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError)
+            {
 
             }
         });
     }
 
-    private void setDataToAutoComplete() {
+    private void setDataToAutoComplete()
+    {
         ArrayAdapter<String> yearsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, years);
         yearAutoCompleteTextView.setAdapter(yearsAdapter);
@@ -107,32 +120,40 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         setOnClick(departmentAutoCompleteTextView);
     }
 
-    private void setOnClick(final AutoCompleteTextView autoCompleteTextView) {
-        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+    private void setOnClick(final AutoCompleteTextView autoCompleteTextView)
+    {
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 autoCompleteTextView.showDropDown();
             }
         });
     }
 
     @OnClick(R.id.choose_user)
-    void choose_user() {
+    void choose_user()
+    {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         String hash = null;
-        if (radioGroup.getCheckedRadioButtonId() == R.id.student) {
+        if (radioGroup.getCheckedRadioButtonId() == R.id.student)
+        {
             String year = yearAutoCompleteTextView.getText().toString();
             String department = departmentAutoCompleteTextView.getText().toString();
             String section = sectionEditText.getText().toString();
             hash = year + "-" + department + "-" + section;
         }
 
-        reference.child(Data.USERS).orderByChild("hash").equalTo(hash).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(Data.USERS).orderByChild("hash").equalTo(hash).addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 users = new ArrayList<User>();
-                for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot usersSnapshot : dataSnapshot.getChildren())
+                {
                     User user = usersSnapshot.getValue(User.class);
                     user.setId(usersSnapshot.getKey());
                     users.add(user);
@@ -143,7 +164,8 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError)
+            {
 
             }
         });
@@ -151,21 +173,26 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     }
 
     @OnClick(R.id.sign_up)
-    void signUp() {
+    void signUp()
+    {
         String email=emailEditText.getText().toString();
         String password=passwordEditText.getText().toString();
         String confPassword=confPasswordEditText.getText().toString();
         String code=codeEditText.getText().toString();
-        if(password.equals(confPassword)){
-            if(!code.equals(selectedUser.getCode())){
+        if(password.equals(confPassword))
+        {
+            if(!code.equals(selectedUser.getCode()))
+            {
                 Toast.makeText(this, "Wrong Code", Toast.LENGTH_SHORT).show();
                 return;
             }
             FirebaseAuth auth=FirebaseAuth.getInstance();
             auth.createUserWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>()
+                    {
                         @Override
-                        public void onSuccess(AuthResult authResult) {
+                        public void onSuccess(AuthResult authResult)
+                        {
                             uploadUser(authResult);
                         }
                     });
@@ -173,7 +200,8 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         }
     }
 
-    private void uploadUser(AuthResult authResult) {
+    private void uploadUser(AuthResult authResult)
+    {
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         selectedUser.setEmail(authResult.getUser().getEmail());
@@ -209,10 +237,12 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
                     yearAutoCompleteTextView.setVisibility(View.VISIBLE);
                     departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
                     sectionEditText.setVisibility(View.VISIBLE);
+                    choose_user.setVisibility (View.VISIBLE);
                 } else {
                     yearAutoCompleteTextView.setVisibility(View.GONE);
                     departmentAutoCompleteTextView.setVisibility(View.GONE);
                     sectionEditText.setVisibility(View.GONE);
+                    choose_user.setVisibility (View.GONE);
                 }
             }
         });
@@ -223,7 +253,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         selectedUser = users.get(position);
         dialog.dismiss();
         nameTextView.setText(selectedUser.getName());
-
+        choose_user.setVisibility (View.GONE);
 
     }
     private String getMacAddress() {

@@ -29,21 +29,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserFragment extends Fragment implements UsersAdapter.OnUserClickListener {
-
+public class UserFragment extends Fragment implements UsersAdapter.OnUserClickListener
+{
     @BindView(R.id.floating_user)
     FloatingActionButton floating_user;
     List<User> users = new ArrayList<>();
     @BindView(R.id.users_recycler)
     RecyclerView userRecyclerView;
 
-    public UserFragment() {
-        // Required empty public constructor
-    }
+    public UserFragment()
+    {}
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
@@ -63,7 +63,6 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
                     users.add(user);
                 }
                 setUserAdapter();
-
             }
 
             @Override
@@ -73,12 +72,11 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
         });
     }
 
-    private void setUserAdapter() {
+    private void setUserAdapter()
+    {
         UsersAdapter usersAdapter = new UsersAdapter(getActivity(), users, this);
         userRecyclerView.setAdapter(usersAdapter);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-
     }
 
     @OnClick(R.id.floating_user)
