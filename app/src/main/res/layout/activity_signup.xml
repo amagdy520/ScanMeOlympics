@@ -1,189 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scan.me.SignupScreen.Signup"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.scan.me.SignupScreen.Signup">
 
 
-    <RadioGroup
-        android:id="@+id/singup_radiogroup"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/admin"
+        <RadioGroup
+            android:id="@+id/singup_radiogroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Admin"/>
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/tutor"
+            <RadioButton
+                android:id="@+id/admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Admin" />
+
+            <RadioButton
+                android:id="@+id/tutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Tutor" />
+
+            <RadioButton
+                android:id="@+id/student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:checked="true"
+                android:text="Student" />
+        </RadioGroup>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Year">
+
+            <AutoCompleteTextView
+                android:id="@+id/signup_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:focusableInTouchMode="false"
+                android:textColorHint="#fff" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Department">
+
+            <AutoCompleteTextView
+                android:id="@+id/signup_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:focusableInTouchMode="false"
+                android:textColorHint="#fff" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Section">
+
+            <EditText
+                android:id="@+id/signup_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="number"
+                android:textColorHint="#fff" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/choose_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:text="SEARCH"
+            android:textColor="#ffff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Tutor"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp" />
 
-        <RadioButton
-            android:id="@+id/student"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-
-            android:text="Student"
-            android:checked="true"
-            />
-    </RadioGroup>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Year">
-
-        <AutoCompleteTextView
-            android:id="@+id/signup_year"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:focusableInTouchMode="false"
-            android:textColorHint="#fff"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:hint="Code">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Department">
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="number"
+                android:textColorHint="#fff" />
+        </android.support.design.widget.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/signup_department"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:focusableInTouchMode="false"
-            android:textColorHint="#fff"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:hint="Email">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Section">
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/signup_section"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:inputType="number"
             android:layout_marginRight="10dp"
-            android:textColorHint="#fff" />
-    </android.support.design.widget.TextInputLayout>
+            android:hint="Password"
+            app:passwordToggleEnabled="true">
 
-    <Button
-        android:id="@+id/choose_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SEARCH"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:textSize="18sp"
-        />
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Code">
-
-        <EditText
-            android:id="@+id/code"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_password_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:inputType="number"
             android:layout_marginRight="10dp"
-            android:textColorHint="#fff" />
-    </android.support.design.widget.TextInputLayout>
+            android:hint="Confirm Password"
+            app:passwordToggleEnabled="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_email_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Email">
+            <EditText
+                android:id="@+id/conf_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/email"
+        <Button
+            android:id="@+id/sign_up"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"
+            android:text="SignUp"
+            android:textColor="#ffff"
+            android:textSize="18sp" />
+    </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_password_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Password"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPassword"
-            android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_password_layout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="Confirm Password"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/conf_password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPassword"
-            android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SignUp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffff"
-        android:textSize="18sp"/>
-
-</LinearLayout>
+</ScrollView>

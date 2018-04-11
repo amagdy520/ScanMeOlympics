@@ -60,8 +60,6 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     EditText passwordEditText;
     @BindView(R.id.conf_password)
     EditText confPasswordEditText;
-    @BindView (R.id.choose_user)
-    Button choose_user;
 
 
     List<String> years = new ArrayList<>();
@@ -242,12 +240,12 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
                     yearAutoCompleteTextView.setVisibility(View.VISIBLE);
                     departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
                     sectionEditText.setVisibility(View.VISIBLE);
-                    choose_user.setVisibility (View.VISIBLE);
+
                 } else {
                     yearAutoCompleteTextView.setVisibility(View.GONE);
                     departmentAutoCompleteTextView.setVisibility(View.GONE);
                     sectionEditText.setVisibility(View.GONE);
-                    choose_user.setVisibility (View.GONE);
+
                 }
             }
         });
@@ -258,7 +256,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         selectedUser = users.get(position);
         dialog.dismiss();
         nameTextView.setText(selectedUser.getName());
-        choose_user.setVisibility (View.GONE);
+
 
     }
     private String getMacAddress() {

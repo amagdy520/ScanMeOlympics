@@ -53,6 +53,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
             super(itemView);
             name= (TextView) itemView.findViewById(R.id.user_name);
             type= (TextView) itemView.findViewById(R.id.user_type);
+            itemView.setOnClickListener(this);
 
 
         }
