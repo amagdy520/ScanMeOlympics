@@ -8,14 +8,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="80dp"
             android:hint="Number">
 
             <EditText
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:hint="Type">
 
             <EditText
@@ -46,7 +49,11 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:orientation="horizontal"
-           android:layout_height="wrap_content">
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dp"
+           android:gravity="center_horizontal"
+           >
+
            <android.support.design.widget.TextInputLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -60,7 +67,8 @@
                    android:layout_height="match_parent"
                    android:inputType="text"
                    android:ems="6"
-                   android:singleLine="true" />
+                   android:singleLine="true"
+                   />
 
            </android.support.design.widget.TextInputLayout>
            <android.support.design.widget.TextInputLayout
