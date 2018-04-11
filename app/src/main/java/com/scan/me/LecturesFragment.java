@@ -112,5 +112,6 @@ public class LecturesFragment extends Fragment implements LecturesAdapter.OnLect
         intent.putExtras(bundle);
         startActivity(intent);
 
+
     }
 }
