@@ -38,6 +38,10 @@ public class RoomDetails extends AppCompatActivity {
     TextView roomNumberTextView;
     @BindView(R.id.room_type)
     TextView roomTypeTextView;
+    @BindView (R.id.room_latitude)
+    TextView room_latitude;
+    @BindView (R.id.room_longitude)
+    TextView room_longitude;
     @BindView(R.id.reservation_recycler)
     RecyclerView reservationRecyclerView;
     private DatabaseReference reference;
@@ -92,10 +96,12 @@ public class RoomDetails extends AppCompatActivity {
 
     }
 
-    private void setRoomData() {
-        roomNumberTextView.setText(room.getNumber());
-        roomTypeTextView.setText(room.getType());
-
+    private void setRoomData()
+    {
+        roomNumberTextView.setText(" "+room.getNumber()+" ");
+        roomTypeTextView.setText("Type: "+room.getType());
+        room_latitude.setText ("Latitude: "+room.getLatitude ());
+        room_longitude.setText ("Longitude: "+room.getLatitude ());
     }
 
     @Override

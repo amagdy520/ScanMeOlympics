@@ -25,8 +25,17 @@ public class UserDetails extends AppCompatActivity {
     TextView nameTextView;
     @BindView(R.id.user_type)
     TextView typeTextView;
+    @BindView(R.id.user_section)
+    TextView user_section;
+    @BindView(R.id.user_year)
+    TextView user_year;
+    @BindView(R.id.user_department)
+    TextView user_department;
+    @BindView(R.id.user_email)
+    TextView user_email;
     @BindView(R.id.user_code)
     TextView codeTextView;
+
     String userId;
     private User user;
 
@@ -60,8 +69,11 @@ public class UserDetails extends AppCompatActivity {
     private void setUserData() {
         nameTextView.setText(user.getName());
         typeTextView.setText(user.getType());
+        user_section.setText (user.getSection ());
+        user_year.setText (user.getYear ());
+        user_department.setText (user.getDepartment ());
+        user_email.setText (user.getEmail ());
         codeTextView.setText(user.getCode());
-
     }
 
     @OnClick(R.id.generate_code)
