@@ -60,7 +60,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
         void bind(int position){
             User user=userList.get(position);
             name.setText(user.getName());
-
+            type.setText (user.getType ());
         }
 
         @Override

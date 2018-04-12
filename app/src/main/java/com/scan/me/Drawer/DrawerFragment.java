@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -116,6 +120,19 @@ public class DrawerFragment extends Fragment {
         startActivity(new Intent(getActivity(), SplashScreen.class));
         getActivity().finish();
     }
+
+    @OnClick(R.id.share)
+    void share()
+    {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "SHARE THE FUCKIN' APP");
+        startActivity(Intent.createChooser(intent, "Share the app with..."));
+    }
+
+
 
     public void setUpDrawer(DrawerLayout drawerLayout, Toolbar toolbar) {
         mDrawerLayout = drawerLayout;

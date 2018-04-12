@@ -45,6 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         tools:listitem="@layout/drawer_row" />
+
+    <Button
+        android:id="@+id/share"
+        android:text="SHARE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <!--Log Out for Testing -->
     <Button
         android:id="@+id/logout"
