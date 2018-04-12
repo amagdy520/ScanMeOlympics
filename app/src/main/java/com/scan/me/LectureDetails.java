@@ -55,7 +55,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         ButterKnife.bind(this);
         lectureId = getIntent().getExtras().getString(LECTURE_ID);
         userType = getIntent().getExtras().getString(USER_TYPE);
-        Log.e("Type",userType);
+        Log.e("Type", userType);
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
@@ -86,7 +86,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
                                 userAttends.add(userAttend);
                             } else if (userType.equals(User.STUDENT)) {
                                 UserAttend userAttend = snapshot.getValue(UserAttend.class);
-                                if (userAttend.getUid().equals(uid)) {
+                                if (userAttend.getUid() != null && userAttend.getUid().equals(uid)) {
                                     userAttend.setId(snapshot.getKey());
                                     userAttends.add(userAttend);
                                 }
@@ -105,7 +105,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
     }
 
     private void setLectureData() {
-        if(reservation==null){
+        if (reservation == null) {
             return;
         }
         lectureTextView.setText(reservation.getName());
@@ -120,7 +120,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
             statButton.setText("Start");
 
         }
-        if(reservation.getCode()!=null){
+        if (reservation.getCode() != null) {
             codeTextView.setText(reservation.getCode());
         }
 
@@ -149,39 +149,39 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
 
     @Override
     public void onSwitchClicked(final int position) {
-        final boolean  isChecked=!userAttends.get(position).isAttend();
+        final boolean isChecked = !userAttends.get(position).isAttend();
         setUserRecycler();
-      if(userType.equals(User.TUTOR)){
-          UserAttend userAttend = userAttends.get(position);
-          DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-          reference.keepSynced(true);
-          reference.child(Data.LECTURES).child(today).child(lectureId).
-                  child(Data.STUDENTS).child(userAttend.getId()).child("attend").setValue(isChecked);
-      }else if (userType.equals(User.STUDENT)){
-          final Dialog dialog=new Dialog(this);
-          dialog.setContentView(R.layout.reserve_dialog);
-          final EditText codeEditText=(EditText)dialog.findViewById(R.id.code);
-          Button attendButton=(Button)dialog.findViewById(R.id.sendCode);
-          attendButton.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
+        if (userType.equals(User.TUTOR)) {
+            UserAttend userAttend = userAttends.get(position);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            reference.keepSynced(true);
+            reference.child(Data.LECTURES).child(today).child(lectureId).
+                    child(Data.STUDENTS).child(userAttend.getId()).child("attend").setValue(isChecked);
+        } else if (userType.equals(User.STUDENT)) {
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.reserve_dialog);
+            final EditText codeEditText = (EditText) dialog.findViewById(R.id.code);
+            Button attendButton = (Button) dialog.findViewById(R.id.sendCode);
+            attendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                  if(reservation.getCode().equals(codeEditText.getText().toString())){
-                      UserAttend userAttend = userAttends.get(position);
-                      DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                      reference.keepSynced(true);
-                      reference.child(Data.LECTURES).child(today).child(lectureId).
-                              child(Data.STUDENTS).child(userAttend.getId()).child("attend").setValue(isChecked);
-                  }else {
-                      Toast.makeText(LectureDetails.this, "Wrong Code", Toast.LENGTH_SHORT).show();
+                    if (reservation.getCode().equals(codeEditText.getText().toString())) {
+                        UserAttend userAttend = userAttends.get(position);
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                        reference.keepSynced(true);
+                        reference.child(Data.LECTURES).child(today).child(lectureId).
+                                child(Data.STUDENTS).child(userAttend.getId()).child("attend").setValue(isChecked);
+                    } else {
+                        Toast.makeText(LectureDetails.this, "Wrong Code", Toast.LENGTH_SHORT).show();
 
 
-                  }
-                  dialog.dismiss();
-              }
-          });
-          dialog.show();
-      }
+                    }
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
 
     }
 }

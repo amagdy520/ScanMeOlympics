@@ -123,8 +123,8 @@ public class AddUser extends AppCompatActivity {
         String year = yearAutoCompleteTextView.getText().toString();
         String department = departmentAutoCompleteTextView.getText().toString();
         String name = nameEditText.getText().toString();
-        String number = nameEditText.getText().toString();
-        String section = numberEditText.getText().toString();
+        String number = numberEditText.getText().toString();
+        String section = sectionEditText.getText().toString();
         String type;
         String hash;
         if(typeRadioGroup.getCheckedRadioButtonId()==R.id.student){

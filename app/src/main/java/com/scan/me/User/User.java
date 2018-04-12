@@ -17,7 +17,6 @@ public class User implements Parcelable {
     public User() {
 
     }
-
     public User(String email, String name, String number, String uid, String mac, String year, String department, String section, String type, String hash) {
         this.email = email;
         this.name = name;
@@ -70,6 +69,14 @@ public class User implements Parcelable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public long getCodeTime() {

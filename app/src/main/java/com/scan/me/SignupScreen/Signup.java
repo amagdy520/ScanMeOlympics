@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.TransitionOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -182,6 +183,10 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         String password=passwordEditText.getText().toString();
         String confPassword=confPasswordEditText.getText().toString();
         String code=codeEditText.getText().toString();
+        if(password.length()<6){
+            Toast.makeText(this, "Password less than 6 digit", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(password.equals(confPassword))
         {
             if(!code.equals(selectedUser.getCode()))

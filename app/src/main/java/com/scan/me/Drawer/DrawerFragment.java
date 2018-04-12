@@ -1,6 +1,7 @@
 package com.scan.me.Drawer;
 
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.scan.me.R;
+import com.scan.me.SplashScreen;
 import com.scan.me.User.User;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -105,6 +109,12 @@ public class DrawerFragment extends Fragment {
 //        }
 //        this.name.setText(userData.getNumber());
 
+    }
+    @OnClick(R.id.logout)
+    void signOut(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getActivity(), SplashScreen.class));
+        getActivity().finish();
     }
 
     public void setUpDrawer(DrawerLayout drawerLayout, Toolbar toolbar) {
