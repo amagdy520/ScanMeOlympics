@@ -2,10 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
-    <!-- TODO: Design and Menu  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -40,27 +39,10 @@
 
     <ListView
         android:id="@+id/drawer_list"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
         tools:listitem="@layout/drawer_row" />
 
-    <Button
-        android:id="@+id/share"
-        android:text="SHARE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <!--Log Out for Testing -->
-    <Button
-        android:id="@+id/qrcode"
-        android:text="MyQRCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/logout"
-        android:text="Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </LinearLayout>

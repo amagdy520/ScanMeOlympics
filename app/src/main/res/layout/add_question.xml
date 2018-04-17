@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="380dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00555555"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:weightSum="100"
+    android:layout_centerInParent="true"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="300dp"
+        android:background="@drawable/round_layout2"
+        android:layout_centerInParent="true"
+        android:id="@+id/login_layout"
+        android:orientation="vertical"
+        android:weightSum="10"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_edit_text"
+            android:gravity="center"
+            android:hint="Your Question"
+            android:id="@+id/UserQuestion"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_margin="10dp"
+            android:text="ASK QUESTION"
+            android:background="@drawable/round_button"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textScaleX="1.1"
+            android:id="@+id/UploadQuestion"/>
+    </LinearLayout>
+</RelativeLayout>

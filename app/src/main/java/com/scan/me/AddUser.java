@@ -1,5 +1,6 @@
 package com.scan.me;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddUser extends AppCompatActivity {
-
+    public static final int FROM_FOLDER=223;
     @BindView(R.id.year)
     AutoCompleteTextView yearAutoCompleteTextView;
     @BindView(R.id.department)
@@ -114,7 +115,16 @@ public class AddUser extends AppCompatActivity {
             }
         });
     }
+    @OnClick(R.id.from_xls)
+    void openManger() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, FROM_FOLDER);
+    }
 
+    void getDataFromExcel(String path){
+
+    }
 
     @OnClick(R.id.done)
     void createUser() {
@@ -139,12 +149,21 @@ public class AddUser extends AppCompatActivity {
 
 
         User user =
-                new User(null,
+                new User(null,null,
                         name, number,null, null, year, department, section,type , hash);
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         reference.child(Data.USERS).push().setValue(user);
         finish();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==FROM_FOLDER && resultCode==RESULT_OK){
+            String path =data.getData().toString();
+            Log.e("Path",path);
+        }
     }
 }

@@ -1,24 +1,33 @@
 package com.scan.me.User;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.scan.me.Data;
+import com.scan.me.GlideApp;
 import com.scan.me.R;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.Random;
 
@@ -46,37 +55,43 @@ public class UserDetails extends AppCompatActivity {
 
     String userId;
     private User user;
+    private DatabaseReference mDatabase;
+    private StorageReference mStorage;
+    private FirebaseAuth mAuth;
+    private final int GALLERY_REQUEST = 1;
+    private Uri mImageUri;
+    @BindView(R.id.image)
+    ImageView image;
     String uid;
     private User myUser;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         ButterKnife.bind(this);
         userId = getIntent().getExtras().getString(USER_ID);
-        uid=FirebaseAuth.getInstance ().getUid ();
+        uid = FirebaseAuth.getInstance().getUid();
+
         getUserData();
     }
 
-    private void getUserData()
-    {
+    private void getUserData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
-        reference.child(Data.USERS).child(userId).addValueEventListener(new ValueEventListener()
-        {
+        reference.child(Data.USERS).child(userId).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 setUserData();
+
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError)
-            {}
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
     }
 
@@ -88,6 +103,15 @@ public class UserDetails extends AppCompatActivity {
         user_department.setText (user.getDepartment ());
         user_email.setText (user.getEmail ());
         codeTextView.setText(user.getCode());
+        if (user.getImage() != null) {
+            GlideApp.with(this)
+                    .load(user.getImage())
+                    .placeholder(R.drawable.user_pic)
+                    .error(R.drawable.user_pic)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(image);
+
+        }
     }
 
     @OnClick(R.id.generate_code)
@@ -95,6 +119,57 @@ public class UserDetails extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         reference.child(Data.USERS).child(userId).child("code").setValue("" + (new Random().nextInt(9000) + 1000));
+    }
+
+    @OnClick(R.id.image)
+    void openGallery() {
+        if (!uid.equals(user.getUid())) {
+            return;
+        }
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, GALLERY_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //******************************************************************************************
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
+            mImageUri = data.getData();
+            CropImage.activity(mImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                mImageUri = result.getUri();
+                Log.e("Image", mImageUri.toString());
+                Log.e("Last", mImageUri.getLastPathSegment());
+                mStorage = FirebaseStorage.getInstance().getReference();
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                StorageReference filepath1 = mStorage.child("Profile").child(uid)
+                        .child(mImageUri.getLastPathSegment());
+                filepath1.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        mDatabase.child(Data.USERS).child(userId).child("image").setValue(downloadUrl.toString());
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("Fail leh", e.getMessage());
+                            }
+                        });
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @OnClick(R.id.edit_user)

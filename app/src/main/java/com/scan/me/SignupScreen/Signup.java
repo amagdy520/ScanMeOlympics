@@ -209,6 +209,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         selectedUser.setEmail(authResult.getUser().getEmail());
+        selectedUser.setPassword(passwordEditText.getText().toString());
         selectedUser.setUid(authResult.getUser().getUid());
         selectedUser.setCode(null);
         selectedUser.setMac(getMacAddress());
@@ -293,7 +294,6 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = ADMIN;
-
     }
 
     @OnClick(R.id.students)

@@ -19,13 +19,19 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.WriterException;
+import com.scan.me.AboutApp;
+import com.scan.me.ContactUS;
+import com.scan.me.GlideApp;
 import com.scan.me.QRCode;
 import com.scan.me.R;
 import com.scan.me.SplashScreen;
 import com.scan.me.User.User;
+import com.scan.me.User.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +79,13 @@ public class DrawerFragment extends Fragment {
     private void setList() {
 
         final List<DrawerData> drawerDataList = new ArrayList<>();
-//        drawerDataList.add(new DrawerData(R.string.my_cars, R.drawable.ic_cars));
-//        drawerDataList.add(new DrawerData(R.string.my_requests, R.drawable.ic_history));
-//        drawerDataList.add(new DrawerData(R.string.settings, R.drawable.ic_settings));
-//        drawerDataList.add(new DrawerData(R.string.about_us, R.drawable.ic_info));
-//        drawerDataList.add(new DrawerData(R.string.sign_out, R.drawable.ic_exit));
+        drawerDataList.add(new DrawerData(R.string.profile, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.share, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.my_code, R.drawable.ic_qr_code));
+        drawerDataList.add(new DrawerData(R.string.contact_us, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.about, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.log_out, R.drawable.scan));
+
 
         DrawerListAdapter adapter = new DrawerListAdapter(getActivity(), drawerDataList);
         listView.setAdapter(adapter);
@@ -86,6 +94,33 @@ public class DrawerFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        if(user.getId()==null){
+                            Toast.makeText(getActivity(), "Loading Data", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Intent intent=new Intent(getActivity(), UserDetails.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putString(UserDetails.USER_ID,user.getId());
+                        startActivity(intent.putExtras(bundle));
+                        break;
+                    case 1:
+                        share();
+                        break;
+                    case 2:
+                        qr();
+                        break;
+                    case 3:
+                        startActivity(new Intent(getActivity(),ContactUS.class));
+                        break;
+                    case 4:
+                        startActivity(new Intent(getActivity(),AboutApp.class));
+                        break;
+                    case 5:
+                        signOut();
+                        break;
+                }
             }
         });
 
@@ -98,44 +133,38 @@ public class DrawerFragment extends Fragment {
      * @param userData :User Data
      */
     public void setUserData(User userData) {
+        user=userData;
         uid = userData.getUid();
-//        user = userData;
-//        if (user.getBalance() != null) {
-//            balance.setText(user.getBalance() + " EGP");
-//        } else {
-//            balance.setText("00.0 EGP");
-//        }
-//        if (image != null) {
-//            GlideApp.with(getActivity())
-//                    .load(userData.getImage())
-//                    .placeholder(R.drawable.user_pic)
-//                    .error(R.drawable.user_pic)
-//                    .apply(RequestOptions.circleCropTransform())
-//                    .into(this.image);
 //
-//        }
+        if (user.getImage() != null) {
+            GlideApp.with(getActivity())
+                    .load(userData.getImage())
+                    .placeholder(R.drawable.user_pic)
+                    .error(R.drawable.user_pic)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(this.image);
+
+        }
 //        this.name.setText(userData.getNumber());
 
     }
 
-    @OnClick(R.id.logout)
     void signOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), SplashScreen.class));
         getActivity().finish();
     }
 
-    @OnClick(R.id.qrcode)
     void qr() {
         if (uid == null) {
             return;
         }
         try {
-            Bitmap qrCodeBitmap= QRCode.encodeAsBitmap(getActivity(),uid);
+            Bitmap qrCodeBitmap = QRCode.encodeAsBitmap(getActivity(), uid);
             Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.qr_code_dialog);
-            ImageView qrCodeImageView=(ImageView)dialog.findViewById(R.id.qr_code);
+            ImageView qrCodeImageView = (ImageView) dialog.findViewById(R.id.qr_code);
             qrCodeImageView.setImageBitmap(qrCodeBitmap);
             dialog.show();
             mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -147,7 +176,6 @@ public class DrawerFragment extends Fragment {
 
     }
 
-    @OnClick(R.id.share)
     void share() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);

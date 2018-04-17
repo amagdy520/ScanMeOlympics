@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Scan Me</string>
     <string name="title_activity_home">Home</string>
-
+    <string name="aboutus">
+        <![CDATA[At ScanMe, our premise is simple: we believe questions and answers are the building blocks of conversation, self-expression and deeper understanding. As the only global social network built on a Q&A format, we are a bit different from other services you might use. How you engage with friends and express yourself on ScanMe is done through the lens of what your social connections are curious to learn about you. Through the natural exchange of questions and answers, ScanMe aims to be a safe, fun and engaging place for learning more about yourself and exploring the social world around you.  ScanMe’s leadership is dedicated to making the ScanMe service safer and positive. We are significantly investing in technology, people and leadership to transform our service and earn your trust]]></string>
+    <string name="finall">ScanMe © 2018</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="profile">Profile</string>
+    <string name="my_code">My Code</string>
+    <string name="share">Share</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="about">About</string>
+    <string name="log_out">Logout</string>
 </resources>
