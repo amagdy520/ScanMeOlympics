@@ -1,6 +1,6 @@
 package com.scan.me.SignupScreen;
-
-import android.app.Activity;
+import
+ android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -294,6 +294,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = ADMIN;
+
     }
 
     @OnClick(R.id.students)

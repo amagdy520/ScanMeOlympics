@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fill"
     tools:context="com.scan.me.LectureDetails">
     <!--TODO Design -->
     <LinearLayout
@@ -21,6 +22,10 @@
             android:id="@+id/start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:textColor="#ffff"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="start"
             android:visibility="visible" />
 
@@ -31,6 +36,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:arc_bottom_text="Attendance"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             app:arc_finished_color="@color/colorAccent"
             app:arc_progress="60"
             app:arc_text_color="@color/colorAccent" />

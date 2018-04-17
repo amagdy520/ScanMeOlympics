@@ -218,6 +218,8 @@ public class UserDetails extends AppCompatActivity {
 
     private void deleteUser()
     {
+        Log.e ("TAG Email=",user.getEmail ());
+        Log.e ("TAG Pass=",user.getPassword ());
         FirebaseAuth.getInstance().signInWithEmailAndPassword (user.getEmail (), user.getPassword())
                 .addOnSuccessListener (new OnSuccessListener<AuthResult> ()
                 {

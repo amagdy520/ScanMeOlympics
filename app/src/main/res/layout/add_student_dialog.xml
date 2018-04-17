@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+    android:background="@drawable/fill"
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:hint="Year">
 
         <AutoCompleteTextView
@@ -51,19 +53,17 @@
             android:textColorHint="#fff" />
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
+    <Button
         android:id="@+id/add_students"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add"
-        android:paddingRight="40dp"
-        android:paddingLeft="40dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:background="@drawable/rounded"
+        android:background="@drawable/round_button"
         android:textAllCaps="true" />
 </LinearLayout>

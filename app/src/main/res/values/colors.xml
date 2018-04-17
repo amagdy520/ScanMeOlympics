@@ -6,8 +6,7 @@
 
     <color name="colorPrimary">#081c24</color>
     <color name="colorPrimaryDark">#081c24</color>
-    <color name="colorAccent">#01d277</color>
-    <color name="colorAccddent">#01d277</color>
+    <color name="colorAccent">#081c24</color>
     <color name="play_dark">#173a40</color>
 
 </resources>

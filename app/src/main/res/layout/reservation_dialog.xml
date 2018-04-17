@@ -22,7 +22,10 @@
     <Button
         android:layout_width="match_parent"
         android:id="@+id/sendCode"
+        android:layout_marginTop="20dp"
         android:text="Attend"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:textColor="#ffff"/>
 
 </LinearLayout>

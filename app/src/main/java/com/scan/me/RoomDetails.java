@@ -49,7 +49,8 @@ public class RoomDetails extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
         ButterKnife.bind(this);
@@ -61,7 +62,6 @@ public class RoomDetails extends AppCompatActivity {
         int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
         today = year + "-" + month + "-" + day;
         getRoomData();
-
     }
 
 
