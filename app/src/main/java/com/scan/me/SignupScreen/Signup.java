@@ -32,6 +32,7 @@ import com.scan.me.HomeScreen.UsersAdapter;
 import com.scan.me.LoginScreen.LoginActivity;
 import com.scan.me.R;
 import com.scan.me.User.User;
+import com.scan.me.Validation;
 
 import java.net.NetworkInterface;
 import java.util.ArrayList;
@@ -182,9 +183,9 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
             return;
         }
 
-        if (checkValidation(emailEditText)
-                && checkValidation(passwordEditText)
-                && checkValidation(codeEditText)
+        if (Validation.checkValidation(emailEditText)
+                && Validation.checkValidation(passwordEditText)
+                && Validation.checkValidation(codeEditText)
                 && selectedUser != null) {
 
             if (!code.equals(selectedUser.getCode())) {
@@ -306,19 +307,5 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
 
     }
 
-    private boolean checkValidation(AutoCompleteTextView autoCompleteTextView) {
-        if (autoCompleteTextView.getText().equals("")) {
-            autoCompleteTextView.setError("Please fill this field");
-            return false;
-        }
-        return true;
-    }
 
-    private boolean checkValidation(EditText editText) {
-        if (editText.getText().equals("")) {
-            editText.setError("Please fill this field");
-            return false;
-        }
-        return true;
-    }
 }

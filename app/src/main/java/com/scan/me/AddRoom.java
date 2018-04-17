@@ -51,7 +51,7 @@ public class AddRoom extends AppCompatActivity
 
     }
     @OnClick(R.id.my_location)
-    private void getDeviceLocation() {
+     void getDeviceLocation() {
 
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();

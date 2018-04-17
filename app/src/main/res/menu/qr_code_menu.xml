@@ -2,6 +2,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="bfci.com.trainsmartsystem.Home">
+
+    <item
+        android:id="@+id/action_add_students"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_add"
+        android:tint="#fff"
+        android:title="Reserve"/>
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="100"

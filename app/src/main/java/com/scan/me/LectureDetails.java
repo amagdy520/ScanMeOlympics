@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -54,8 +57,12 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
     ArcProgress progress;
     private String uid;
     private Reservation reservation;
-    int totalStudent,attendedStudents;
+    int totalStudent, attendedStudents;
     List<UserAttend> userAttends;
+    private List<String> years;
+    private List<String> departments;
+    private DatabaseReference reference;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +95,20 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         reservation = dataSnapshot.getValue(Reservation.class);
                         userAttends = new ArrayList<>();
-                        totalStudent=0;
-                        attendedStudents=0;
+                        totalStudent = 0;
+                        attendedStudents = 0;
                         for (DataSnapshot snapshot : dataSnapshot.child(Data.STUDENTS).getChildren()) {
                             totalStudent++;
                             if (userType.equals(User.TUTOR)) {
                                 UserAttend userAttend = snapshot.getValue(UserAttend.class);
                                 userAttend.setId(snapshot.getKey());
                                 userAttends.add(userAttend);
-                                if(userAttend.isAttend()){
+                                if (userAttend.isAttend()) {
                                     attendedStudents++;
                                 }
                             } else if (userType.equals(User.STUDENT)) {
                                 UserAttend userAttend = snapshot.getValue(UserAttend.class);
-                                if(userAttend.isAttend()){
+                                if (userAttend.isAttend()) {
                                     attendedStudents++;
                                 }
                                 if (snapshot.getKey().equals(uid)) {
@@ -231,8 +238,130 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         if (item.getItemId() == R.id.action_scan) {
             scan();
             return true;
+        } else if (item.getItemId() == R.id.action_add_students) {
+            add_students();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void add_students() {
+        getYearData();
+
+    }
+
+    private void getYearData() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child(Data.DATA).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                years = new ArrayList<>();
+                departments = new ArrayList<>();
+                for (DataSnapshot yearDataSnapshot : dataSnapshot.child(Data.YEARS).getChildren()) {
+                    years.add(yearDataSnapshot.getKey());
+                }
+                for (DataSnapshot departmentSnapshot : dataSnapshot.child(Data.DEPARTMENTS).getChildren()) {
+                    departments.add(departmentSnapshot.getKey());
+                }
+                setUpDialog();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setUpDialog() {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.add_student_dialog);
+        final AutoCompleteTextView year = (AutoCompleteTextView) dialog.findViewById(R.id.year);
+        final AutoCompleteTextView department = (AutoCompleteTextView) dialog.findViewById(R.id.department);
+        final EditText section = (AutoCompleteTextView) dialog.findViewById(R.id.section);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, years);
+        ArrayAdapter<String> departmentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, departments);
+        year.setAdapter(yearAdapter);
+        year.setAdapter(yearAdapter);
+        department.setAdapter(departmentAdapter);
+        setOnClick(year);
+        setOnClick(department);
+        TextView addButton = (TextView) dialog.findViewById(R.id.add_students);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Validation.checkValidation(year)
+                        && Validation.checkValidation(department)
+                        && Validation.checkValidation(section)) {
+                    String hash = year + "-" + department + "-" + section;
+                    for (UserAttend userAttend : userAttends) {
+                        if (hash.equals(userAttend.getHash())) {
+                            Toast.makeText(LectureDetails.this, "Already Exists", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    getUsers(hash);
+
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    private void getUsers(String hash) {
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.keepSynced(true);
+        reference.child(Data.USERS).orderByChild("hash").equalTo(hash)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<UserAttend> users = new ArrayList<UserAttend>();
+                        for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
+                            User user = usersSnapshot.getValue(User.class);
+                            users.add(new UserAttend(user.getId(), user.getUid(), user.getName(), user.getImage(), user.getHash(), false));
+                        }
+                        reserve(users, reservation);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void reserve(ArrayList<UserAttend> users, Reservation reservation) {
+
+        for (UserAttend userAttend : users) {
+            reference.child(Data.LECTURES)
+                    .child(lectureId)
+                    .child(Data.STUDENTS)
+                    .child(userAttend.getUid())
+                    .setValue(userAttend);
+            reference.child(Data.USERS)
+                    .child(userAttend.getId())
+                    .child(Data.LECTURES)
+                    .child(lectureId)
+                    .setValue(reservation);
+        }
+        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    private void setOnClick(final AutoCompleteTextView autoCompleteTextView) {
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoCompleteTextView.showDropDown();
+            }
+        });
     }
 
     private void scan() {

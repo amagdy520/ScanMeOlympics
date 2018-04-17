@@ -127,7 +127,6 @@ public class RoomDetails extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESERVE && resultCode == RESULT_OK) {
-            // TODO : add Progress Dialog
             getReserveStudents(data);
         }
     }
@@ -146,7 +145,7 @@ public class RoomDetails extends AppCompatActivity {
                         ArrayList<UserAttend> users = new ArrayList<UserAttend>();
                         for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
                             User user = usersSnapshot.getValue(User.class);
-                            users.add(new UserAttend(user.getId(), user.getUid(), user.getName(), user.getImage(), false));
+                            users.add(new UserAttend(user.getId(), user.getUid(), user.getName(), user.getImage(),user.getHash(), false));
                         }
                         reserve(users, reservation);
 
@@ -163,7 +162,6 @@ public class RoomDetails extends AppCompatActivity {
 
     private void reserve(ArrayList<UserAttend> users, Reservation reservation) {
 
-        // TODO : make sure that all data Uploaded
         //reserve in room
         reservation.setDate(today);
         reference.keepSynced(true);
@@ -196,6 +194,7 @@ public class RoomDetails extends AppCompatActivity {
             reference.child(Data.USERS)
                     .child(userAttend.getId())
                     .child(Data.LECTURES)
+                    .child(key)
                     .setValue(reservation);
         }
         Toast.makeText(this, "Reserved", Toast.LENGTH_SHORT).show();

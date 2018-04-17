@@ -5,18 +5,27 @@ package com.scan.me;
  */
 
 public class UserAttend {
-    String id, uid, name, image;
+    String id, uid, name, image, hash;
     boolean attend;
 
     public UserAttend() {
     }
 
-    public UserAttend(String id, String uid, String name, String image, boolean attend) {
+    public UserAttend(String id, String uid, String name, String image, String hash, boolean attend) {
         this.id = id;
         this.uid = uid;
         this.name = name;
         this.image = image;
         this.attend = attend;
+        this.hash = hash;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getId() {
