@@ -7,17 +7,17 @@ import android.os.Parcelable;
  * Created by mido on 09/04/18.
  */
 
-public class User implements Parcelable {
+public class User  implements Parcelable{
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
-    private String email, name, uid, mac, year, department, section, image, type, hash, code, number,id;
+    private String email,password, name, uid, mac, year, department, section, image, type, hash, code, number,id;
     long codeTime;
 
     public User() {
 
     }
-    public User(String email, String name, String number, String uid, String mac, String year, String department, String section, String type, String hash) {
+    public User(String email,String password, String name, String number, String uid, String mac, String year, String department, String section, String type, String hash) {
         this.email = email;
         this.name = name;
         this.uid = uid;
@@ -28,6 +28,32 @@ public class User implements Parcelable {
         this.type = type;
         this.hash = hash;
         this.number = number;
+        this.password=password;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User> ()
+    {
+        @Override
+        public User createFromParcel(Parcel in)
+        {
+            return new User (in);
+        }
+
+        @Override
+        public User[] newArray(int size)
+        {
+            return new User[size];
+        }
+    };
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
     protected User(Parcel in) {
@@ -47,17 +73,6 @@ public class User implements Parcelable {
         codeTime = in.readLong();
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -171,26 +186,30 @@ public class User implements Parcelable {
         this.hash = hash;
     }
 
+
     @Override
-    public int describeContents() {
+    public int describeContents()
+    {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(email);
-        dest.writeString(name);
-        dest.writeString(uid);
-        dest.writeString(mac);
-        dest.writeString(year);
-        dest.writeString(department);
-        dest.writeString(section);
-        dest.writeString(image);
-        dest.writeString(type);
-        dest.writeString(hash);
-        dest.writeString(code);
-        dest.writeString(number);
-        dest.writeString(id);
-        dest.writeLong(codeTime);
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString (email);
+        dest.writeString (password);
+        dest.writeString (name);
+        dest.writeString (uid);
+        dest.writeString (mac);
+        dest.writeString (year);
+        dest.writeString (department);
+        dest.writeString (section);
+        dest.writeString (image);
+        dest.writeString (type);
+        dest.writeString (hash);
+        dest.writeString (code);
+        dest.writeString (number);
+        dest.writeString (id);
+        dest.writeLong (codeTime);
     }
 }

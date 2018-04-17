@@ -94,5 +94,4 @@
         android:layout_marginRight="10dp"
         android:textColor="@color/colorPrimary"
         />
-
 </LinearLayout>

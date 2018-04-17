@@ -50,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -135,6 +135,21 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:text="code" />
+
+            <Button
+                android:id="@+id/edit_user"
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit User"
+                android:textSize="20sp"/>
+
+            <Button
+                android:id="@+id/del_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEL User"
+                android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

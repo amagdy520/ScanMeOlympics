@@ -94,7 +94,8 @@ public class AddUser extends AppCompatActivity {
         });
     }
 
-    private void setDataToAutoComplete() {
+    private void setDataToAutoComplete()
+    {
         ArrayAdapter<String> yearsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, years);
         yearAutoCompleteTextView.setAdapter(yearsAdapter);
@@ -103,9 +104,6 @@ public class AddUser extends AppCompatActivity {
         departmentAutoCompleteTextView.setAdapter(departmentAdapter);
         setOnClick(yearAutoCompleteTextView);
         setOnClick(departmentAutoCompleteTextView);
-        Log.e("Size", years.size() + "");
-
-
     }
 
     void setOnClick(final AutoCompleteTextView autoCompleteTextView) {

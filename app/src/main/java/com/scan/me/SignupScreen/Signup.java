@@ -282,7 +282,6 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         adminsTextView.setTextColor(Color.parseColor("#FF000000"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = TUTOR;
-        choose_user();
     }
 
     @OnClick(R.id.admins)
@@ -294,7 +293,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = ADMIN;
-        choose_user();
+
     }
 
     @OnClick(R.id.students)
@@ -306,7 +305,6 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         adminsTextView.setTextColor(Color.parseColor("#FF000000"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = STUDENT;
-        choose_user();
 
     }
 
