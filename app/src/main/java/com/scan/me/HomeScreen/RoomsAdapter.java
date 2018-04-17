@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scan.me.R;
@@ -32,7 +33,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.user_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.room_row, parent, false);
         return new RoomsAdapter.MyViewHolder(view);
     }
 
@@ -48,19 +49,28 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView number, type;
+        TextView number;
+        ImageView roomImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            type = (TextView) itemView.findViewById(R.id.user_name);
-            number = (TextView) itemView.findViewById(R.id.user_type);
+            roomImage = (ImageView) itemView.findViewById(R.id.room_image);
+            number = (TextView) itemView.findViewById(R.id.room_number);
             itemView.setOnClickListener(this);
         }
 
         void bind(int position) {
             Room room = roomList.get(position);
-            type.setText(room.getType());
-            number.setText(room.getNumber());
+
+            number.setText(room.getType()+" "+room.getNumber());
+            if(room.getType().equals(Room.HALL)){
+             roomImage.setImageResource(R.drawable.hall);
+            }else if(room.getType().equals(Room.LAB)){
+                roomImage.setImageResource(R.drawable.lab);
+            }else {
+                roomImage.setImageResource(R.drawable.stage);
+
+            }
         }
 
         @Override

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,77 +35,70 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RoomsFragment extends Fragment implements RoomsAdapter.OnRoomClickListener {
-    @BindView (R.id.floating_room)
+    @BindView(R.id.floating_room)
     FloatingActionButton floating_room;
     @BindView(R.id.room_recycler)
     RecyclerView roomsRecyclerView;
-    List<Room> rooms = new ArrayList<> ();
+    List<Room> rooms = new ArrayList<>();
     User user;
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public RoomsFragment()
-    {}
+    public RoomsFragment() {
+    }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rooms, container, false);
         ButterKnife.bind(this, view);
         getRooms();
         return view;
     }
 
-    private void getRooms()
-    {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance ().getReference ();
-        databaseReference.child (Data.ROOMS).addValueEventListener (new ValueEventListener ()
-        {
+    private void getRooms() {
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child(Data.ROOMS).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                rooms = new ArrayList<> ();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                rooms = new ArrayList<>();
 
-                for(DataSnapshot roomsSnapshot : dataSnapshot.getChildren ())
-                {
-                    Room room = roomsSnapshot.getValue (Room.class);
+                for (DataSnapshot roomsSnapshot : dataSnapshot.getChildren()) {
+                    Room room = roomsSnapshot.getValue(Room.class);
                     room.setId(roomsSnapshot.getKey());
                     rooms.add(room);
                 }
                 setRoomAdapter();
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
 
-    private void setRoomAdapter()
-    {
-        RoomsAdapter roomsAdapter = new RoomsAdapter(getActivity(), rooms,this);
+    private void setRoomAdapter() {
+        RoomsAdapter roomsAdapter = new RoomsAdapter(getActivity(), rooms, this);
         roomsRecyclerView.setAdapter(roomsAdapter);
-        roomsRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
+        roomsRecyclerView.setLayoutManager((new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)));
     }
 
     @OnClick(R.id.floating_room)
-    void addRoom()
-    {
-        Intent intent = new Intent (getActivity (), AddRoom.class);
-        startActivity (intent);
+    void addRoom() {
+        Intent intent = new Intent(getActivity(), AddRoom.class);
+        startActivity(intent);
     }
 
     @Override
     public void onRoomClicked(int position) {
-        Room  room=rooms.get(position);
-        Intent intent=new Intent(getActivity(),RoomDetails.class);
-        Bundle bundle=new Bundle();
-        bundle.putString(RoomDetails.ROOM_ID,room.getId());
-        bundle.putParcelable(RoomDetails.USER,user);
+        Room room = rooms.get(position);
+        Intent intent = new Intent(getActivity(), RoomDetails.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(RoomDetails.ROOM_ID, room.getId());
+        bundle.putParcelable(RoomDetails.USER, user);
         intent.putExtras(bundle);
         startActivity(intent);
 
