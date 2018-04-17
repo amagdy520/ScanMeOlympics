@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 public class Reservation implements Parcelable {
 
-    String name, tutorName, tutorId, id, from, to, hash, code, date;
+    String name, tutorName, tutorId, id, from, to, hash, code, date,roomNumber,floor;
     boolean attend;
 
     Reservation() {
@@ -25,6 +25,7 @@ public class Reservation implements Parcelable {
         this.attend = attend;
         this.date = date;
     }
+
 
     public static final Creator<Reservation> CREATOR = new Creator<Reservation>() {
         @Override
@@ -130,6 +131,22 @@ public class Reservation implements Parcelable {
     }
 
 
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -146,6 +163,8 @@ public class Reservation implements Parcelable {
         dest.writeString(hash);
         dest.writeString(code);
         dest.writeString(date);
+        dest.writeString(roomNumber);
+        dest.writeString(floor);
         dest.writeByte((byte) (attend ? 1 : 0));
     }
 }

@@ -135,6 +135,8 @@ public class RoomDetails extends AppCompatActivity {
         final Reservation reservation = data.getExtras().getParcelable(ROOM_RESERVE);
         reservation.setTutorId(user.getId());
         reservation.setTutorName(user.getName());
+        reservation.setFloor(room.getFloor());
+        reservation.setRoomNumber(room.getNumber());
 
         reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);

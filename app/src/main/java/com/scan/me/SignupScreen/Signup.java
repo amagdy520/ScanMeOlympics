@@ -275,35 +275,38 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
 
     @OnClick(R.id.tutors)
     void selectTutors() {
-        tutorsTextView.setTextColor(Color.parseColor("#FFF"));
-        tutorsTextView.setBackgroundColor(Color.parseColor("#000"));
-        studentsTextView.setTextColor(Color.parseColor("#000"));
+        tutorsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+        tutorsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
+        studentsTextView.setTextColor(Color.parseColor("#FF000000"));
         studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        adminsTextView.setTextColor(Color.parseColor("#000"));
+        adminsTextView.setTextColor(Color.parseColor("#FF000000"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = TUTOR;
+        choose_user();
     }
 
     @OnClick(R.id.admins)
     void selectAdmins() {
-        adminsTextView.setTextColor(Color.parseColor("#FFF"));
-        adminsTextView.setBackgroundColor(Color.parseColor("#000"));
-        studentsTextView.setTextColor(Color.parseColor("#000"));
+        adminsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+        adminsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
+        studentsTextView.setTextColor(Color.parseColor("#FF000000"));
         studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        tutorsTextView.setTextColor(Color.parseColor("#000"));
+        tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = ADMIN;
+        choose_user();
     }
 
     @OnClick(R.id.students)
     void selectStudents() {
-        studentsTextView.setTextColor(Color.parseColor("#FFF"));
-        studentsTextView.setBackgroundColor(Color.parseColor("#000"));
-        tutorsTextView.setTextColor(Color.parseColor("#000"));
+        studentsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
+        studentsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
+        tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        adminsTextView.setTextColor(Color.parseColor("#000"));
+        adminsTextView.setTextColor(Color.parseColor("#FF000000"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
         selected = STUDENT;
+        choose_user();
 
     }
 

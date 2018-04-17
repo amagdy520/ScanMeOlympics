@@ -21,6 +21,8 @@ public class AddRoom extends AppCompatActivity
 {
     @BindView(R.id.room_number)
     EditText roomNumberEditText;
+    @BindView(R.id.room_floor)
+    EditText floorEditText;
     @BindView(R.id.type)
     EditText typeEditText;
     @BindView(R.id.latitude)
@@ -39,15 +41,24 @@ public class AddRoom extends AppCompatActivity
     @OnClick(R.id.done)
     void done()
     {
-        String number = roomNumberEditText.getText().toString();
-        String type = typeEditText.getText().toString();
-        String longitude = longitudeEditText.getText().toString();
-        String latitude = latitudeEditText.getText().toString();
+        if(Validation.checkValidation(roomNumberEditText)
+                && Validation.checkValidation(floorEditText)
+                && Validation.checkValidation(typeEditText)
+                &&Validation.checkValidation(longitudeEditText)
+                &&Validation.checkValidation(latitudeEditText)){
+            String number = roomNumberEditText.getText().toString();
+            String floor=floorEditText.getText().toString();
+            String type = typeEditText.getText().toString();
+            String longitude = longitudeEditText.getText().toString();
+            String latitude = latitudeEditText.getText().toString();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(Data.ROOMS).push().setValue(new Room(number,
-                type, Double.parseDouble(latitude), Double.parseDouble(longitude)));
-        finish();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            reference.child(Data.ROOMS).push().setValue(new Room(number,floor,
+                    type, Double.parseDouble(latitude), Double.parseDouble(longitude)));
+            finish();
+
+        }
+
 
     }
     @OnClick(R.id.my_location)

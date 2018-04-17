@@ -2,8 +2,9 @@ package com.scan.me;
 
 public class Room
 {
-    public static final String HALL = "hall";
-    public static final String LAB = "lab";
+    public static final String STAGE = "Stage";
+    public static final String HALL = "Hall";
+    public static final String LAB = "Lab";
     private String id, number, type,floor;
     private double latitude, longitude;
 
@@ -12,11 +13,20 @@ public class Room
 
     }
 
-    public Room(String number, String type, double latitude, double longitude) {
+    public Room(String number, String type, String floor, double latitude, double longitude) {
         this.number = number;
         this.type = type;
+        this.floor = floor;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
     }
 
     public String getId() {

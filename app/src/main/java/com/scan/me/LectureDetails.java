@@ -51,8 +51,6 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
     TextView lectureTextView;
     @BindView(R.id.start)
     Button statButton;
-    @BindView(R.id.code)
-    TextView codeTextView;
     @BindView(R.id.arc_progress)
     ArcProgress progress;
     private String uid;
@@ -71,15 +69,10 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         ButterKnife.bind(this);
         lectureId = getIntent().getExtras().getString(LECTURE_ID);
         userType = getIntent().getExtras().getString(USER_TYPE);
-        Log.e("Type", userType);
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
-        Calendar mcurrentTime = Calendar.getInstance();
-        int year = mcurrentTime.get(Calendar.YEAR);
-        int month = mcurrentTime.get(Calendar.MONTH);
-        int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
-//        today = year + "-" + month + "-" + day;
+
         getLectureData();
     }
 
@@ -137,17 +130,6 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         lectureTextView.setText(reservation.getName());
         if (userType.equals(User.TUTOR)) {
             statButton.setVisibility(View.VISIBLE);
-            codeTextView.setVisibility(View.VISIBLE);
-        }
-
-        if (reservation.isAttend()) {
-            statButton.setText("Stop");
-        } else {
-            statButton.setText("Start");
-
-        }
-        if (reservation.getCode() != null) {
-            codeTextView.setText(reservation.getCode());
         }
 
 
@@ -157,12 +139,14 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
     void startLecture() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
-        boolean attend;
-        attend = !reservation.attend;
         reference.child(Data.LECTURES).child(lectureId)
-                .child("attend").setValue(attend);
+                .child("attend").setValue(true);
         reference.child(Data.LECTURES).child(lectureId)
                 .child("code").setValue("" + (new Random().nextInt(9000) + 1000));
+        Intent intent = new Intent(this, QRCodeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(QRCodeActivity.LECTURE_ID, lectureId);
+        startActivity(intent.putExtras(bundle));
 
     }
 
@@ -224,26 +208,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (userType.equals(User.TUTOR)) {
-            getMenuInflater().inflate(R.menu.qr_code_menu, menu);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_scan) {
-            scan();
-            return true;
-        } else if (item.getItemId() == R.id.action_add_students) {
-            add_students();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void add_students() {
         getYearData();
@@ -383,11 +348,59 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
             if (result.getContents() == null) {
                 Toast.makeText(this, "You Cancelled", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, result.getContents() + "-", Toast.LENGTH_SHORT).show(); //tho show what in the qr code
+                if(userType.equals(User.TUTOR)){
+                    attendStudent(result.getContents());
+                }else {
+                    attend(result.getContents());
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void attend(String code) {
+        if(reservation.getCode().equals(code)){
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            reference.keepSynced(true);
+            reference.child(Data.LECTURES).child(lectureId).
+                    child(Data.STUDENTS).child(uid).child("attend").setValue(true);
+        }else {
+            Toast.makeText(this, "Wrong Code", Toast.LENGTH_SHORT).show();
+            scan();
+        }
+    }
+
+    private void attendStudent(String uid) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.keepSynced(true);
+        reference.child(Data.LECTURES).child(lectureId).
+                child(Data.STUDENTS).child(uid).child("attend").setValue(true);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (userType.equals(User.TUTOR)) {
+            getMenuInflater().inflate(R.menu.qr_code_menu, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.qr_code_menu_student, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_scan) {
+            scan();
+            return true;
+        } else if (item.getItemId() == R.id.action_add_students) {
+            add_students();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
