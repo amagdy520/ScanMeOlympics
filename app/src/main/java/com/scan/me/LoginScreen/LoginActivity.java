@@ -124,11 +124,13 @@ public class LoginActivity extends AppCompatActivity {
         reference.child(Data.USERS).orderByChild("uid").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("Data",dataSnapshot.toString());
-                User user =null;
-                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    user= snapshot.getValue(User.class);
+                Log.e("Data", dataSnapshot.toString());
+                User user = null;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    user = snapshot.getValue(User.class);
                 }
+                Log.e("mac1", user.getMac());
+                Log.e("mac1", getMacAddress());
 
                 if (user.getMac().equals(getMacAddress())) {
                     Toast.makeText(LoginActivity.this, "Login user Successfully!", Toast.LENGTH_SHORT).show();
