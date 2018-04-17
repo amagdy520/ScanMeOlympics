@@ -24,7 +24,9 @@
                android:layout_height="wrap_content"
                android:text="Admins"
                android:paddingLeft="5dp"
+               android:textColor="@color/colorAccent"
                android:textStyle="bold"
+               android:background="@drawable/left_round"
                android:paddingRight="5dp"
                android:textSize="18sp" />
            <View

@@ -276,35 +276,44 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
 
     @OnClick(R.id.tutors)
     void selectTutors() {
-        tutorsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
-        tutorsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
-        studentsTextView.setTextColor(Color.parseColor("#FF000000"));
+        tutorsTextView.setTextColor(Color.parseColor("#FFD700"));
+        tutorsTextView.setBackgroundColor(Color.parseColor("#081c24"));
+        studentsTextView.setTextColor(Color.parseColor("#081c24"));
         studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        adminsTextView.setTextColor(Color.parseColor("#FF000000"));
+        adminsTextView.setTextColor(Color.parseColor("#081c24"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        yearAutoCompleteTextView.setVisibility(View.GONE);
+        departmentAutoCompleteTextView.setVisibility(View.GONE);
+        sectionEditText.setVisibility(View.GONE);
         selected = TUTOR;
     }
 
     @OnClick(R.id.admins)
     void selectAdmins() {
-        adminsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
-        adminsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
-        studentsTextView.setTextColor(Color.parseColor("#FF000000"));
+        adminsTextView.setTextColor(Color.parseColor("#FFD700"));
+        adminsTextView.setBackgroundResource(R.drawable.left_round);
+        studentsTextView.setTextColor(Color.parseColor("#081c24"));
         studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
+        tutorsTextView.setTextColor(Color.parseColor("#081c24"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        yearAutoCompleteTextView.setVisibility(View.GONE);
+        departmentAutoCompleteTextView.setVisibility(View.GONE);
+        sectionEditText.setVisibility(View.GONE);
         selected = ADMIN;
 
     }
 
     @OnClick(R.id.students)
     void selectStudents() {
-        studentsTextView.setTextColor(Color.parseColor("#FFFFFFFF"));
-        studentsTextView.setBackgroundColor(Color.parseColor("#FF000000"));
-        tutorsTextView.setTextColor(Color.parseColor("#FF000000"));
+        studentsTextView.setTextColor(Color.parseColor("#FFD700"));
+        studentsTextView.setBackgroundResource(R.drawable.right_round);
+        tutorsTextView.setTextColor(Color.parseColor("#081c24"));
         tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
-        adminsTextView.setTextColor(Color.parseColor("#FF000000"));
+        adminsTextView.setTextColor(Color.parseColor("#081c24"));
         adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        yearAutoCompleteTextView.setVisibility(View.VISIBLE);
+        departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
+        sectionEditText.setVisibility(View.VISIBLE);
         selected = STUDENT;
 
     }

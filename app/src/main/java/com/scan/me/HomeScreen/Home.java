@@ -52,10 +52,16 @@ public class Home extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setDrawerLayout();
         getUserData();
-
-
     }
 
     private void getUserData() {

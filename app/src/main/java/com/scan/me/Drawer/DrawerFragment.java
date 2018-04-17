@@ -54,8 +54,6 @@ public class DrawerFragment extends Fragment {
     TextView name;
     @BindView(R.id.image)
     ImageView image;
-    @BindView(R.id.balance)
-    TextView balance;
     private boolean isOpen;
     private User user;
     private String uid;
@@ -79,12 +77,12 @@ public class DrawerFragment extends Fragment {
     private void setList() {
 
         final List<DrawerData> drawerDataList = new ArrayList<>();
-        drawerDataList.add(new DrawerData(R.string.profile, R.drawable.scan));
-        drawerDataList.add(new DrawerData(R.string.share, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.profile, R.drawable.ic_profile));
+        drawerDataList.add(new DrawerData(R.string.share, R.drawable.ic_share));
         drawerDataList.add(new DrawerData(R.string.my_code, R.drawable.ic_qr_code));
-        drawerDataList.add(new DrawerData(R.string.contact_us, R.drawable.scan));
-        drawerDataList.add(new DrawerData(R.string.about, R.drawable.scan));
-        drawerDataList.add(new DrawerData(R.string.log_out, R.drawable.scan));
+        drawerDataList.add(new DrawerData(R.string.contact_us, R.drawable.ic_live_help));
+        drawerDataList.add(new DrawerData(R.string.about, R.drawable.ic_team));
+        drawerDataList.add(new DrawerData(R.string.log_out, R.drawable.ic_logout));
 
 
         DrawerListAdapter adapter = new DrawerListAdapter(getActivity(), drawerDataList);
@@ -145,7 +143,7 @@ public class DrawerFragment extends Fragment {
                     .into(this.image);
 
         }
-//        this.name.setText(userData.getNumber());
+        this.name.setText(userData.getName());
 
     }
 
