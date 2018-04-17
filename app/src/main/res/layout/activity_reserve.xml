@@ -64,6 +64,7 @@
                     android:inputType="text"
                     android:textColorHint="#fff" />
             </android.support.design.widget.TextInputLayout>
+
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout

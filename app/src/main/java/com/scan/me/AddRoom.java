@@ -1,9 +1,15 @@
 package com.scan.me;
 
+import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,7 +27,7 @@ public class AddRoom extends AppCompatActivity
     EditText latitudeEditText;
     @BindView(R.id.longitude)
     EditText longitudeEditText;
-
+    private FusedLocationProviderClient mFusedLocationProviderClient;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,6 +50,34 @@ public class AddRoom extends AppCompatActivity
         finish();
 
     }
+    @OnClick(R.id.my_location)
+    private void getDeviceLocation() {
 
+        try {
+            Task locationResult = mFusedLocationProviderClient.getLastLocation();
+
+            locationResult.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        Location mLastLocation = (Location) task.getResult();
+
+                        latitudeEditText.setText(mLastLocation.getLatitude()+"");
+                        latitudeEditText.setText(mLastLocation.getLongitude()+"");
+
+
+                    }
+                }
+            });
+
+        } catch (
+                SecurityException e)
+
+        {
+            Log.e("Exception: %s", e.getMessage());
+        }
+
+    }
 
 }

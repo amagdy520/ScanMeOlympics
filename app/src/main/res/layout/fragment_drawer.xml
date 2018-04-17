@@ -54,6 +54,11 @@
 
     <!--Log Out for Testing -->
     <Button
+        android:id="@+id/qrcode"
+        android:text="MyQRCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
         android:id="@+id/logout"
         android:text="Logout"
         android:layout_width="wrap_content"

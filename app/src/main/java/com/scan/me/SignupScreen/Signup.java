@@ -3,6 +3,7 @@ package com.scan.me.SignupScreen;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,16 +42,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Signup extends Activity implements UsersAdapter.OnUserClickListener
-{
+public class Signup extends Activity implements UsersAdapter.OnUserClickListener {
+    public static final int ADMIN = 0;
+    public static final int STUDENT = 1;
+    public static final int TUTOR = 2;
     @BindView(R.id.signup_year)
     AutoCompleteTextView yearAutoCompleteTextView;
     @BindView(R.id.signup_department)
     AutoCompleteTextView departmentAutoCompleteTextView;
     @BindView(R.id.signup_section)
     EditText sectionEditText;
-    @BindView(R.id.singup_radiogroup)
-    RadioGroup radioGroup;
     @BindView(R.id.user_name)
     TextView nameTextView;
     @BindView(R.id.code)
@@ -61,54 +62,51 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     EditText passwordEditText;
     @BindView(R.id.conf_password)
     EditText confPasswordEditText;
-
+    @BindView(R.id.admins)
+    TextView adminsTextView;
+    @BindView(R.id.students)
+    TextView studentsTextView;
+    @BindView(R.id.tutors)
+    TextView tutorsTextView;
 
     List<String> years = new ArrayList<>();
     List<String> departments = new ArrayList<>();
     private ArrayList<User> users;
     private Dialog dialog;
     User selectedUser;
+    private int selected = STUDENT;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        onRadioChange();
         getYearData();
     }
 
-    private void getYearData()
-    {
+    private void getYearData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(Data.DATA).addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        reference.child(Data.DATA).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                for (DataSnapshot yearDataSnapshot : dataSnapshot.child(Data.YEARS).getChildren())
-                {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot yearDataSnapshot : dataSnapshot.child(Data.YEARS).getChildren()) {
                     years.add(yearDataSnapshot.getKey());
                 }
-                for (DataSnapshot departmentSnapshot : dataSnapshot.child(Data.DEPARTMENTS).getChildren())
-                {
+                for (DataSnapshot departmentSnapshot : dataSnapshot.child(Data.DEPARTMENTS).getChildren()) {
                     departments.add(departmentSnapshot.getKey());
                 }
                 setDataToAutoComplete();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
 
-    private void setDataToAutoComplete()
-    {
+    private void setDataToAutoComplete() {
         ArrayAdapter<String> yearsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, years);
         yearAutoCompleteTextView.setAdapter(yearsAdapter);
@@ -119,44 +117,36 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         setOnClick(departmentAutoCompleteTextView);
     }
 
-    private void setOnClick(final AutoCompleteTextView autoCompleteTextView)
-    {
-        autoCompleteTextView.setOnClickListener(new View.OnClickListener()
-        {
+    private void setOnClick(final AutoCompleteTextView autoCompleteTextView) {
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 autoCompleteTextView.showDropDown();
             }
         });
     }
 
     @OnClick(R.id.choose_user)
-    void choose_user()
-    {
+    void choose_user() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         String hash = null;
-        if (radioGroup.getCheckedRadioButtonId() == R.id.student)
-        {
+        if (selected == STUDENT) {
             String year = yearAutoCompleteTextView.getText().toString();
             String department = departmentAutoCompleteTextView.getText().toString();
             String section = sectionEditText.getText().toString();
             hash = year + "-" + department + "-" + section;
-        }else if(radioGroup.getCheckedRadioButtonId() == R.id.admin){
-            hash=User.ADMIN;
-        }else {
-            hash=User.TUTOR;
+        } else if (selected == ADMIN) {
+            hash = User.ADMIN;
+        } else {
+            hash = User.TUTOR;
         }
 
-        reference.child(Data.USERS).orderByChild("hash").equalTo(hash).addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        reference.child(Data.USERS).orderByChild("hash").equalTo(hash).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 users = new ArrayList<User>();
-                for (DataSnapshot usersSnapshot : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
                     User user = usersSnapshot.getValue(User.class);
                     user.setId(usersSnapshot.getKey());
                     users.add(user);
@@ -167,8 +157,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -176,51 +165,57 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     }
 
     @OnClick(R.id.sign_up)
-    void signUp()
-    {
-        // TODO : Add Validation
-        String email=emailEditText.getText().toString();
-        String password=passwordEditText.getText().toString();
-        String confPassword=confPasswordEditText.getText().toString();
-        String code=codeEditText.getText().toString();
-        if(password.length()<6){
+    void signUp() {
+
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String confPassword = confPasswordEditText.getText().toString();
+        String code = codeEditText.getText().toString();
+
+
+        if (!password.equals(confPassword)) {
+            Toast.makeText(this, "make sure that Password equal Confirm Password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6) {
             Toast.makeText(this, "Password less than 6 digit", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(password.equals(confPassword))
-        {
-            if(!code.equals(selectedUser.getCode()))
-            {
+
+        if (checkValidation(emailEditText)
+                && checkValidation(passwordEditText)
+                && checkValidation(codeEditText)
+                && selectedUser != null) {
+
+            if (!code.equals(selectedUser.getCode())) {
                 Toast.makeText(this, "Wrong Code", Toast.LENGTH_SHORT).show();
                 return;
             }
-            FirebaseAuth auth=FirebaseAuth.getInstance();
-            auth.createUserWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>()
-                    {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
-                        public void onSuccess(AuthResult authResult)
-                        {
+                        public void onSuccess(AuthResult authResult) {
                             uploadUser(authResult);
                         }
                     });
-
         }
+
+
     }
 
-    private void uploadUser(AuthResult authResult)
-    {
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
+    private void uploadUser(AuthResult authResult) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         selectedUser.setEmail(authResult.getUser().getEmail());
         selectedUser.setUid(authResult.getUser().getUid());
         selectedUser.setCode(null);
         selectedUser.setMac(getMacAddress());
         reference.child(Data.USERS).child(selectedUser.getId()).setValue(selectedUser);
-        Bundle bundle=new Bundle();
-        bundle.putString(LoginActivity.EMAIL,emailEditText.getText().toString());
-        bundle.putString(LoginActivity.PASSWORD,passwordEditText.getText().toString());
-        setResult(RESULT_OK,new Intent().putExtras(bundle));
+        Bundle bundle = new Bundle();
+        bundle.putString(LoginActivity.EMAIL, emailEditText.getText().toString());
+        bundle.putString(LoginActivity.PASSWORD, passwordEditText.getText().toString());
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
         finish();
     }
 
@@ -237,25 +232,6 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
     }
 
 
-    private void onRadioChange() {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.student) {
-                    yearAutoCompleteTextView.setVisibility(View.VISIBLE);
-                    departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
-                    sectionEditText.setVisibility(View.VISIBLE);
-
-                } else {
-                    yearAutoCompleteTextView.setVisibility(View.GONE);
-                    departmentAutoCompleteTextView.setVisibility(View.GONE);
-                    sectionEditText.setVisibility(View.GONE);
-
-                }
-            }
-        });
-    }
-
     @Override
     public void onUserClicked(int position) {
         selectedUser = users.get(position);
@@ -264,6 +240,7 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
 
 
     }
+
     private String getMacAddress() {
         try {
             // get all the interfaces
@@ -295,4 +272,53 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
         return null;
     }
 
+    @OnClick(R.id.tutors)
+    void selectTutors() {
+        tutorsTextView.setTextColor(Color.parseColor("#FFF"));
+        tutorsTextView.setBackgroundColor(Color.parseColor("#000"));
+        studentsTextView.setTextColor(Color.parseColor("#000"));
+        studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        adminsTextView.setTextColor(Color.parseColor("#000"));
+        adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        selected = TUTOR;
+    }
+
+    @OnClick(R.id.admins)
+    void selectAdmins() {
+        adminsTextView.setTextColor(Color.parseColor("#FFF"));
+        adminsTextView.setBackgroundColor(Color.parseColor("#000"));
+        studentsTextView.setTextColor(Color.parseColor("#000"));
+        studentsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        tutorsTextView.setTextColor(Color.parseColor("#000"));
+        tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        selected = ADMIN;
+    }
+
+    @OnClick(R.id.students)
+    void selectStudents() {
+        studentsTextView.setTextColor(Color.parseColor("#FFF"));
+        studentsTextView.setBackgroundColor(Color.parseColor("#000"));
+        tutorsTextView.setTextColor(Color.parseColor("#000"));
+        tutorsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        adminsTextView.setTextColor(Color.parseColor("#000"));
+        adminsTextView.setBackgroundColor(Color.parseColor("#00010101"));
+        selected = STUDENT;
+
+    }
+
+    private boolean checkValidation(AutoCompleteTextView autoCompleteTextView) {
+        if (autoCompleteTextView.getText().equals("")) {
+            autoCompleteTextView.setError("Please fill this field");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidation(EditText editText) {
+        if (editText.getText().equals("")) {
+            editText.setError("Please fill this field");
+            return false;
+        }
+        return true;
+    }
 }

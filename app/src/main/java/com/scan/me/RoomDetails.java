@@ -38,9 +38,9 @@ public class RoomDetails extends AppCompatActivity {
     TextView roomNumberTextView;
     @BindView(R.id.room_type)
     TextView roomTypeTextView;
-    @BindView (R.id.room_latitude)
+    @BindView(R.id.room_latitude)
     TextView room_latitude;
-    @BindView (R.id.room_longitude)
+    @BindView(R.id.room_longitude)
     TextView room_longitude;
     @BindView(R.id.reservation_recycler)
     RecyclerView reservationRecyclerView;
@@ -96,12 +96,11 @@ public class RoomDetails extends AppCompatActivity {
 
     }
 
-    private void setRoomData()
-    {
-        roomNumberTextView.setText(" "+room.getNumber()+" ");
-        roomTypeTextView.setText("Type: "+room.getType());
-        room_latitude.setText ("Latitude: "+room.getLatitude ());
-        room_longitude.setText ("Longitude: "+room.getLatitude ());
+    private void setRoomData() {
+        roomNumberTextView.setText(" " + room.getNumber() + " ");
+        roomTypeTextView.setText("Type: " + room.getType());
+        room_latitude.setText("Latitude: " + room.getLatitude());
+        room_longitude.setText("Longitude: " + room.getLatitude());
     }
 
     @Override
@@ -166,6 +165,7 @@ public class RoomDetails extends AppCompatActivity {
 
         // TODO : make sure that all data Uploaded
         //reserve in room
+        reservation.setDate(today);
         reference.keepSynced(true);
         reference.child(Data.ROOMS)
                 .child(roomId)
@@ -175,15 +175,29 @@ public class RoomDetails extends AppCompatActivity {
                 .setValue(reservation);
         // add lecture
         String key = reference.child(Data.LECTURES)
-                .child(today)
                 .push().getKey();
         reference.child(Data.LECTURES)
-                .child(today).child(key).setValue(reservation);
-        reference.child(Data.LECTURES)
-                .child(today)
                 .child(key)
-                .child(Data.STUDENTS)
-                .setValue(users);
+                .setValue(reservation);
+
+        reference.child(Data.USERS)
+                .child(user.getId())
+                .child(Data.LECTURES)
+                .child(key)
+                .setValue(reservation);
+
+        reservation.setId(key);
+        for (UserAttend userAttend : users) {
+            reference.child(Data.LECTURES)
+                    .child(key)
+                    .child(Data.STUDENTS)
+                    .child(userAttend.getUid())
+                    .setValue(userAttend);
+            reference.child(Data.USERS)
+                    .child(userAttend.getId())
+                    .child(Data.LECTURES)
+                    .setValue(reservation);
+        }
         Toast.makeText(this, "Reserved", Toast.LENGTH_SHORT).show();
 
 

@@ -1,15 +1,68 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.scan.me.HomeScreen.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/users_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="vertical"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="10dp"
+           android:background="@drawable/border"
+           >
+
+           <TextView
+               android:id="@+id/admins"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Admins"
+               android:paddingLeft="5dp"
+               android:textStyle="bold"
+               android:background=""
+               android:paddingRight="5dp"
+               android:textSize="18sp" />
+           <View
+               android:background="@color/colorPrimary"
+               android:layout_width="1dp"
+               android:layout_height="match_parent"/>
+           <TextView
+               android:id="@+id/tutors"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Tutors"
+               android:textStyle="bold"
+               android:paddingLeft="5dp"
+               android:paddingRight="5dp"
+               android:textSize="18sp" />
+           <View
+               android:layout_width="1dp"
+               android:background="@color/colorPrimary"
+               android:layout_height="match_parent"/>
+           <TextView
+               android:id="@+id/students"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Students"
+               android:paddingLeft="5dp"
+               android:textStyle="bold"
+               android:paddingRight="5dp"
+               android:textSize="18sp" />
+
+       </LinearLayout>
+
+       <!-- TODO: Update blank fragment layout -->
+       <android.support.v7.widget.RecyclerView
+           android:id="@+id/users_recycler"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+   </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_user"
@@ -19,4 +72,4 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

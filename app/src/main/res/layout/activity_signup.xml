@@ -12,37 +12,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <RadioGroup
-            android:id="@+id/singup_radiogroup"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            >
 
-            <RadioButton
-                android:id="@+id/admin"
+            <TextView
+                android:id="@+id/admins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Admin" />
-
-            <RadioButton
-                android:id="@+id/tutor"
+                android:text="Admins"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"
+                android:background=""
+                android:paddingRight="5dp"
+                android:textSize="18sp" />
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tutors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Tutor" />
-
-            <RadioButton
-                android:id="@+id/student"
+                android:text="Tutors"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="18sp" />
+            <View
+                android:layout_width="1dp"
+                android:background="@color/colorPrimary"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/students"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:text="Students"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"
+                android:paddingRight="5dp"
+                android:textSize="18sp" />
 
-                android:checked="true"
-                android:text="Student" />
-        </RadioGroup>
+        </LinearLayout>
+
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

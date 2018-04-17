@@ -9,31 +9,21 @@ import android.os.Parcelable;
 
 public class Reservation implements Parcelable {
 
-    String name, tutorName, tutorId, id, from, to, hash,code;
+    String name, tutorName, tutorId, id, from, to, hash, code, date;
     boolean attend;
 
     Reservation() {
     }
 
-    public Reservation(String name, String tutorName, String tutorId, String from, String to, String hash,boolean attend) {
+    public Reservation(String name, String tutorName, String tutorId, String from, String to, String hash, String date, boolean attend) {
         this.name = name;
         this.tutorName = tutorName;
         this.tutorId = tutorId;
         this.from = from;
         this.to = to;
         this.hash = hash;
-        this.attend=attend;
-    }
-
-
-    protected Reservation(Parcel in) {
-        name = in.readString();
-        tutorName = in.readString();
-        tutorId = in.readString();
-        id = in.readString();
-        from = in.readString();
-        to = in.readString();
-        hash = in.readString();
+        this.attend = attend;
+        this.date = date;
     }
 
     public static final Creator<Reservation> CREATOR = new Creator<Reservation>() {
@@ -47,6 +37,25 @@ public class Reservation implements Parcelable {
             return new Reservation[size];
         }
     };
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    protected Reservation(Parcel in) {
+        name = in.readString();
+        tutorName = in.readString();
+        tutorId = in.readString();
+        id = in.readString();
+        from = in.readString();
+        to = in.readString();
+        hash = in.readString();
+    }
+
 
     public String getCode() {
         return code;
@@ -120,6 +129,7 @@ public class Reservation implements Parcelable {
         this.attend = attend;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -135,6 +145,7 @@ public class Reservation implements Parcelable {
         dest.writeString(to);
         dest.writeString(hash);
         dest.writeString(code);
+        dest.writeString(date);
         dest.writeByte((byte) (attend ? 1 : 0));
     }
 }

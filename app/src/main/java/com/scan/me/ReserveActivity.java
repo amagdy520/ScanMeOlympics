@@ -2,6 +2,8 @@ package com.scan.me;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,15 +13,22 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +51,7 @@ public class ReserveActivity extends AppCompatActivity {
     EditText lectureNameEditText;
     private List<String> years = new ArrayList<>();
     private List<String> departments = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +104,38 @@ public class ReserveActivity extends AppCompatActivity {
         String to = toEditText.getText().toString();
         String name = lectureNameEditText.getText().toString();
         String hash = year + "-" + department + "-" + section;
+        if (checkValidation(yearAutoCompleteTextView)
+                && checkValidation(departmentAutoCompleteTextView)
+                && checkValidation(sectionEditText)
+                && checkValidation(fromEditText)
+                && checkValidation(toEditText)
+                && checkValidation(lectureNameEditText)) {
+            Reservation reservation = new Reservation(name, null, null, from, to, hash, null, false);
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(RoomDetails.ROOM_RESERVE, reservation);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+            finish();
 
-        // TODO : add Validation
-        Reservation reservation = new Reservation(name, null, null, from, to, hash, false);
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RoomDetails.ROOM_RESERVE, reservation);
-        intent.putExtras(bundle);
-        setResult(RESULT_OK, intent);
-        finish();
+        }
+
+    }
+
+    private boolean checkValidation(AutoCompleteTextView autoCompleteTextView) {
+        if (autoCompleteTextView.getText().equals("")) {
+            autoCompleteTextView.setError("Please fill this field");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidation(EditText editText) {
+        if (editText.getText().equals("")) {
+            editText.setError("Please fill this field");
+            return false;
+        }
+        return true;
     }
 
 
@@ -129,6 +162,7 @@ public class ReserveActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void setDataToAutoComplete() {
         ArrayAdapter<String> yearsAdapter =

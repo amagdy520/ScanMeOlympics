@@ -1,27 +1,28 @@
 package com.scan.me.Drawer;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.zxing.WriterException;
+import com.scan.me.QRCode;
 import com.scan.me.R;
 import com.scan.me.SplashScreen;
 import com.scan.me.User.User;
@@ -51,6 +52,7 @@ public class DrawerFragment extends Fragment {
     TextView balance;
     private boolean isOpen;
     private User user;
+    private String uid;
 
     public DrawerFragment() {
         // Required empty public constructor
@@ -96,6 +98,7 @@ public class DrawerFragment extends Fragment {
      * @param userData :User Data
      */
     public void setUserData(User userData) {
+        uid = userData.getUid();
 //        user = userData;
 //        if (user.getBalance() != null) {
 //            balance.setText(user.getBalance() + " EGP");
@@ -114,34 +117,55 @@ public class DrawerFragment extends Fragment {
 //        this.name.setText(userData.getNumber());
 
     }
+
     @OnClick(R.id.logout)
-    void signOut(){
+    void signOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), SplashScreen.class));
         getActivity().finish();
     }
 
+    @OnClick(R.id.qrcode)
+    void qr() {
+        if (uid == null) {
+            return;
+        }
+        try {
+            Bitmap qrCodeBitmap= QRCode.encodeAsBitmap(getActivity(),uid);
+            Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.qr_code_dialog);
+            ImageView qrCodeImageView=(ImageView)dialog.findViewById(R.id.qr_code);
+            qrCodeImageView.setImageBitmap(qrCodeBitmap);
+            dialog.show();
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     @OnClick(R.id.share)
-    void share()
-    {
+    void share() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
 
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "SHARE THE FUCKIN' APP");
+        intent.putExtra(Intent.EXTRA_TEXT, "SHARE THE  APP");
         startActivity(Intent.createChooser(intent, "Share the app with..."));
     }
-
 
 
     public void setUpDrawer(DrawerLayout drawerLayout, Toolbar toolbar) {
         mDrawerLayout = drawerLayout;
         final ActionBarDrawerToggle mDrawerToggle =
                 new ActionBarDrawerToggle(getActivity(),
-                                          drawerLayout,
-                                          toolbar,
-                                          R.string.app_name,
-                                          R.string.app_name
+                        drawerLayout,
+                        toolbar,
+                        R.string.app_name,
+                        R.string.app_name
                 ) {
                     @Override
                     public void onDrawerOpened(View drawerView) {

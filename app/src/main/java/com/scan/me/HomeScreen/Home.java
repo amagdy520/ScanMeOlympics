@@ -42,6 +42,7 @@ public class Home extends AppCompatActivity {
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     private User user;
+    private DrawerFragment drawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class Home extends AppCompatActivity {
                     user = snapshot.getValue(User.class);
                 }
                 setTabLayout(user);
+                drawerFragment.setUserData(user);
 
             }
 
@@ -94,13 +96,18 @@ public class Home extends AppCompatActivity {
             RoomsFragment roomsFragment = new RoomsFragment();
             roomsFragment.setUser(user);
             LecturesFragment lecturesFragment = new LecturesFragment();
-            lecturesFragment.setUser(user);
+            lecturesFragment.setUser(user,LecturesFragment.TODAY);
             adapter.addFragment(roomsFragment, "Rooms");
             adapter.addFragment(lecturesFragment, "Lectures");
+
         } else {
             LecturesFragment lecturesFragment = new LecturesFragment();
-            lecturesFragment.setUser(user);
+            lecturesFragment.setUser(user,LecturesFragment.TODAY);
+            LecturesFragment lecturesFragment1 = new LecturesFragment();
+            lecturesFragment1.setUser(user,LecturesFragment.HISTORY);
             adapter.addFragment(lecturesFragment, "Lectures");
+            adapter.addFragment(lecturesFragment1, "History");
+
         }
         mViewPager.setAdapter(adapter);
 //        mViewPager.setOffscreenPageLimit(3);
@@ -115,7 +122,7 @@ public class Home extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        DrawerFragment drawerFragment = (DrawerFragment) getSupportFragmentManager()
+         drawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.drawer_fragment);
         drawerFragment.setUpDrawer(drawerLayout, toolbar);
 

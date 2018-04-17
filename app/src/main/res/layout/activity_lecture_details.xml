@@ -13,23 +13,32 @@
 
         <TextView
             android:id="@+id/lecture_name"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/start"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:text="start" />
+            android:text="start"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/code"
-            android:textSize="20sp"
-            android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <com.github.lzyzsd.circleprogress.ArcProgress
+            android:id="@+id/arc_progress"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:arc_bottom_text="Attendance"
+            app:arc_finished_color="@color/colorAccent"
+            app:arc_progress="60"
+            app:arc_text_color="@color/colorAccent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +48,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/student_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
