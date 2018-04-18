@@ -72,7 +72,10 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
-
+        if(!userType.equals(User.TUTOR)){
+            progress.setVisibility(View.GONE);
+            statButton.setVisibility(View.GONE);
+        }
         getLectureData();
     }
 
