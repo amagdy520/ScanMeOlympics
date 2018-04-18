@@ -245,7 +245,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
         dialog.setContentView(R.layout.add_student_dialog);
         final AutoCompleteTextView year = (AutoCompleteTextView) dialog.findViewById(R.id.year);
         final AutoCompleteTextView department = (AutoCompleteTextView) dialog.findViewById(R.id.department);
-        final EditText section = (AutoCompleteTextView) dialog.findViewById(R.id.section);
+        final EditText section = (EditText) dialog.findViewById(R.id.section);
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, years);
         ArrayAdapter<String> departmentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, departments);
         year.setAdapter(yearAdapter);

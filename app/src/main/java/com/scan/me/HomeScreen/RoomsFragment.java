@@ -98,7 +98,9 @@ public class RoomsFragment extends Fragment implements RoomsAdapter.OnRoomClickL
         Intent intent = new Intent(getActivity(), RoomDetails.class);
         Bundle bundle = new Bundle();
         bundle.putString(RoomDetails.ROOM_ID, room.getId());
-        bundle.putParcelable(RoomDetails.USER, user);
+        bundle.putString(RoomDetails.USER, user.getId());
+        bundle.putString(RoomDetails.TYPE, user.getType());
+        bundle.putString(RoomDetails.NAME, user.getName());
         intent.putExtras(bundle);
         startActivity(intent);
 

@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by mido on 09/04/18.
  */
 
-public class User  implements Parcelable{
+public class User  implements Parcelable {
     public static final String STUDENT = "Student";
     public static final String ADMIN = "Admin";
     public static final String TUTOR = "Tutor";
@@ -31,17 +31,15 @@ public class User  implements Parcelable{
         this.password=password;
     }
 
-    public static final Creator<User> CREATOR = new Creator<User> ()
-    {
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
-        public User createFromParcel(Parcel in)
-        {
-            return new User (in);
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
 
         @Override
-        public User[] newArray(int size)
-        {
+        public User[] newArray(int size) {
             return new User[size];
         }
     };
@@ -188,28 +186,26 @@ public class User  implements Parcelable{
 
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString (email);
-        dest.writeString (password);
-        dest.writeString (name);
-        dest.writeString (uid);
-        dest.writeString (mac);
-        dest.writeString (year);
-        dest.writeString (department);
-        dest.writeString (section);
-        dest.writeString (image);
-        dest.writeString (type);
-        dest.writeString (hash);
-        dest.writeString (code);
-        dest.writeString (number);
-        dest.writeString (id);
-        dest.writeLong (codeTime);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(name);
+        dest.writeString(uid);
+        dest.writeString(mac);
+        dest.writeString(year);
+        dest.writeString(department);
+        dest.writeString(section);
+        dest.writeString(image);
+        dest.writeString(type);
+        dest.writeString(hash);
+        dest.writeString(code);
+        dest.writeString(number);
+        dest.writeString(id);
+        dest.writeLong(codeTime);
     }
 }

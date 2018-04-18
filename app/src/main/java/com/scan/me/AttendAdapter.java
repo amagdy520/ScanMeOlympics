@@ -1,6 +1,7 @@
 package com.scan.me;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +22,13 @@ import java.util.List;
 public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHolder> {
 
 
-
     List<UserAttend> userList;
     Context mContext;
     OnUserClickListener mOnUserClickListener;
     String userType;
     boolean attend;
 
-    public AttendAdapter( Context mContext,List<UserAttend> userList, OnUserClickListener mOnUserClickListener, String userType, boolean attend) {
+    public AttendAdapter(Context mContext, List<UserAttend> userList, OnUserClickListener mOnUserClickListener, String userType, boolean attend) {
         this.userList = userList;
         this.mContext = mContext;
         this.mOnUserClickListener = mOnUserClickListener;
@@ -56,17 +56,17 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHold
     class MyViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         TextView nameTextView;
         Switch attendASwitch;
+        TextView state;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.user_name);
             attendASwitch = (Switch) itemView.findViewById(R.id.attend);
+            state= (TextView) itemView.findViewById(R.id.state);
             if (userType.equals(User.TUTOR)) {
                 attendASwitch.setOnClickListener(this);
-            } else if (attend && userType.equals(User.STUDENT)) {
-                attendASwitch.setOnClickListener(this);
-            }else {
-                attendASwitch.setClickable(false);
+            } else {
+                attendASwitch.setVisibility(View.GONE);
             }
 
 
@@ -76,6 +76,13 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.MyViewHold
             UserAttend user = userList.get(position);
             nameTextView.setText(user.getName());
             attendASwitch.setChecked(user.attend);
+            if(user.isAttend()){
+                state.setTextColor(Color.parseColor("#FF01D277"));
+                state.setText("Attended");
+            }else {
+                state.setTextColor(Color.parseColor("#FFFF0324"));
+                state.setText("Absent");
+            }
 
 
         }

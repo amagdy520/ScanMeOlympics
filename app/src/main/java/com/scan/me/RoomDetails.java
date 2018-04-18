@@ -33,10 +33,12 @@ public class RoomDetails extends AppCompatActivity {
     public static final int RESERVE = 201;
     public static final String ROOM_ID = "RoomId";
     public static final String USER = "User";
+    public static final String TYPE = "type";
+    public static final String NAME = "name";
     public static final String ROOM_RESERVE = "Room Reserve";
-    private String roomId, userId;
+    private String roomId;
     private Room room;
-    private User user;
+//    private User user;
     List<Reservation> reservations;
 
     @BindView(R.id.room_number)
@@ -55,6 +57,7 @@ public class RoomDetails extends AppCompatActivity {
     ImageView roomImage;
     @BindView(R.id.reserve)
     FloatingActionButton reservebutButton;
+    String type,name,userId;
 
 
 
@@ -62,7 +65,9 @@ public class RoomDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
-        user = getIntent().getExtras().getParcelable(USER);
+        userId = getIntent().getExtras().getString(USER);
+        type = getIntent().getExtras().getString(TYPE);
+        name = getIntent().getExtras().getString(NAME);
         ButterKnife.bind(this);
         roomId = getIntent().getExtras().getString(ROOM_ID);
         Calendar mcurrentTime = Calendar.getInstance();
@@ -70,18 +75,23 @@ public class RoomDetails extends AppCompatActivity {
         int month = mcurrentTime.get(Calendar.MONTH);
         int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
         today = year + "-" + month + "-" + day;
-        if(!user.getType().equals(User.TUTOR)){
+        if(!type.equals(User.TUTOR)){
             reservebutButton.setVisibility(View.GONE);
         }
-        getRoomData();
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRoomData();
+    }
 
     private void getRoomData() {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
-        reference.child(Data.ROOMS).child(roomId).addValueEventListener(new ValueEventListener() {
+        reference.child(Data.ROOMS).child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 room = dataSnapshot.getValue(Room.class);
@@ -142,8 +152,8 @@ public class RoomDetails extends AppCompatActivity {
 
     private void getReserveStudents(Intent data) {
         final Reservation reservation = data.getExtras().getParcelable(ROOM_RESERVE);
-        reservation.setTutorId(user.getId());
-        reservation.setTutorName(user.getName());
+        reservation.setTutorId(userId);
+        reservation.setTutorName(name);
         reservation.setFloor(room.getFloor());
         reservation.setRoomNumber(room.getNumber());
 
@@ -190,7 +200,7 @@ public class RoomDetails extends AppCompatActivity {
                 .setValue(reservation);
 
         reference.child(Data.USERS)
-                .child(user.getId())
+                .child(userId)
                 .child(Data.LECTURES)
                 .child(key)
                 .setValue(reservation);

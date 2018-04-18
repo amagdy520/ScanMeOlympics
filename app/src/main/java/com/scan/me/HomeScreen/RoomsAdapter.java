@@ -71,7 +71,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder
                 Glide.with(context).load(R.drawable.lab).into(roomImage);
             } else {
                 Glide.with(context).load(R.drawable.stage).into(roomImage);
-
+            // absent
             }
         }
 
