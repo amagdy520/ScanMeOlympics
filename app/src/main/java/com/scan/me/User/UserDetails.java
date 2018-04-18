@@ -54,13 +54,15 @@ public class UserDetails extends AppCompatActivity {
     @BindView(R.id.user_code)
     TextView codeTextView;
     @BindView(R.id.generate_code)
-    TextView generate_code;
+    ImageView generate_code;
     @BindView(R.id.text_section)
     TextView text_section;
     @BindView(R.id.text_department)
     TextView text_department;
     @BindView(R.id.text_year)
     TextView text_year;
+    @BindView(R.id.text_re)
+    TextView text_re;
 
     String userId;
     private User user;
@@ -99,6 +101,7 @@ public class UserDetails extends AppCompatActivity {
                 {
                     codeTextView.setVisibility (View.GONE);
                     generate_code.setVisibility (View.GONE);
+                    text_re.setVisibility (View.GONE);
                 }
             }
 
@@ -208,69 +211,4 @@ public class UserDetails extends AppCompatActivity {
         intent.putExtra ("USER_ID",user.getId ());
         startActivity (intent);
     }
-
-    @OnClick(R.id.del_user)
-    void delete()
-    {
-        //delete from database
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        reference.child(Data.USERS).child(userId).removeValue ();
-
-        //delete from Auth.
-      getMyData();
-
-
-    }
-
-    private void getMyData()
-    {
-        DatabaseReference reference=FirebaseDatabase.getInstance ().getReference ();
-        reference.keepSynced (true);
-        reference.child (Data.USERS).orderByChild ("uid").equalTo (uid).addListenerForSingleValueEvent (new ValueEventListener ()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                for(DataSnapshot userSnapshot:dataSnapshot.getChildren ()){
-                    myUser=userSnapshot.getValue (User.class);
-                }
-                deleteUser();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-
-            }
-        });
-    }
-
-    private void deleteUser()
-    {
-        Log.e ("TAG Email=",user.getEmail ());
-        Log.e ("TAG Pass=",user.getPassword ());
-        FirebaseAuth.getInstance().signInWithEmailAndPassword (user.getEmail (), user.getPassword())
-                .addOnSuccessListener (new OnSuccessListener<AuthResult> ()
-                {
-                    @Override
-                    public void onSuccess(AuthResult authResult)
-                    {
-                        authResult.getUser ().delete ();
-                        DatabaseReference reference=FirebaseDatabase.getInstance ().getReference ();
-                        reference.keepSynced (true);
-                        reference.child (Data.USERS).child (user.getId ()).removeValue ();
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword (myUser.getEmail (), myUser.getPassword()).addOnSuccessListener (new OnSuccessListener<AuthResult> ()
-                        {
-                            @Override
-                            public void onSuccess(AuthResult authResult)
-                            {
-                                finish ();
-                            }
-                        });
-
-                    }
-                });
-    }
-
-
 }

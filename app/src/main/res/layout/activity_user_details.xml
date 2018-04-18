@@ -34,14 +34,26 @@
             android:text="Name "
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/user_type"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="type"
-            android:layout_gravity="center"
-            />
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/user_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="type"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/edit_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_edit"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <View
@@ -128,54 +140,31 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/generate_code"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:textColor="#ffff"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:layout_margin="20dp"
-            android:text="Generate Code"/>
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/generate_code"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_action_re"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:id="@+id/text_re"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="generate coce"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/user_code"
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
             android:textSize="30sp"
             android:textStyle="bold"
             android:text="...." />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <Button
-            android:id="@+id/edit_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:textColor="#ffff"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:text="Edit User"
-            android:textSize="20sp"/>
-
-        <Button
-            android:id="@+id/del_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/round_button"
-            android:textColor="#ffff"
-            android:layout_margin="10dp"
-            android:text="Delete User"
-            android:textSize="20sp"/>
-
-    </LinearLayout>
-
 </LinearLayout>
