@@ -121,7 +121,7 @@ public class Home extends AppCompatActivity {
         }
         mViewPager.setAdapter(adapter);
 //        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#FFD700"));
+        mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#01d277"));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
