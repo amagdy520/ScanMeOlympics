@@ -3,7 +3,6 @@
     android:layout_width="350dp"
     android:layout_height="380dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-     android:background="@drawable/fill"
     android:orientation="vertical"
     android:padding="5dp"
     android:weightSum="100"

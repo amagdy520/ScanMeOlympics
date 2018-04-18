@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/fill"
+    android:background="@drawable/details"
     tools:context="com.scan.me.User.UserDetails">
 
     <ImageView
@@ -64,39 +64,29 @@
                 android:layout_margin="10dp"
                 android:text="email: " />
             <TextView
+                android:id="@+id/text_section"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="section: " />
             <TextView
+                android:id="@+id/text_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="year: " />
             <TextView
+                android:id="@+id/text_department"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="department: " />
-            <Button
-                android:id="@+id/generate_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/round_button"
-                android:textColor="#ffff"
-                android:textSize="10dp"
-                android:textStyle="bold"
-                android:text="Generate Code"/>
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/user_email"
                 android:layout_width="wrap_content"
@@ -129,25 +119,40 @@
                 android:layout_marginTop="10dp"
                 android:textSize="20dp"
                 android:text="CS" />
-            <TextView
-                android:id="@+id/user_code"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="code" />
-
-
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/generate_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:textColor="#ffff"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:layout_margin="20dp"
+            android:text="Generate Code"/>
+        <TextView
+            android:id="@+id/user_code"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="...." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center">
         <Button
             android:id="@+id/edit_user"

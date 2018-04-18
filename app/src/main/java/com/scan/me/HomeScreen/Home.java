@@ -1,5 +1,6 @@
 package com.scan.me.HomeScreen;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +44,8 @@ public class Home extends AppCompatActivity {
     ViewPager mViewPager;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
+    @BindView (R.id.progressbar)
+    ProgressBar progressBar;
     private User user;
     private DrawerFragment drawerFragment;
 
@@ -52,9 +57,6 @@ public class Home extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
     }
 
     @Override
@@ -73,6 +75,8 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.e("Data", dataSnapshot.toString());
+
+                progressBar.setVisibility (View.GONE);
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     user = snapshot.getValue(User.class);
@@ -120,7 +124,6 @@ public class Home extends AppCompatActivity {
         mTabLayout.setTabTextColors(Color.WHITE, Color.parseColor("#FFD700"));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-
     }
 
     private void setDrawerLayout() {
@@ -131,9 +134,7 @@ public class Home extends AppCompatActivity {
          drawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.drawer_fragment);
         drawerFragment.setUpDrawer(drawerLayout, toolbar);
-
     }
-
 
     class PagerAdapter extends FragmentPagerAdapter {
         List<Fragment> mFragments = new ArrayList<>();
