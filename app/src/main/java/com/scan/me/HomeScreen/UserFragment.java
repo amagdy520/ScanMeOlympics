@@ -8,7 +8,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -51,6 +55,7 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
 
     User user;
     int selected =0;
+    private UsersAdapter usersAdapter;
 
     public void setUser(User user) {
         this.user = user;
@@ -65,6 +70,7 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
+        setHasOptionsMenu(true);
 
         return view;
     }
@@ -112,7 +118,7 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
     }
 
     private void setUserAdapter() {
-        UsersAdapter usersAdapter = new UsersAdapter(getActivity(), users, this);
+         usersAdapter = new UsersAdapter(getActivity(), users, this);
         userRecyclerView.setAdapter(usersAdapter);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
     }
@@ -169,5 +175,28 @@ public class UserFragment extends Fragment implements UsersAdapter.OnUserClickLi
         selected=STUDENTS;
         getUsers();
 
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search_users, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.findItem(R.id.action_search_receipt);
+        SearchView searchView;
+        if (menuItem != null) {
+            searchView = (SearchView) menuItem.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    usersAdapter.getFilter().filter(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    usersAdapter.getFilter().filter(newText);
+                    return true;
+                }
+            });
+        }
     }
 }

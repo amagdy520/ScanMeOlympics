@@ -4,51 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fill"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/background"
     tools:context="com.scan.me.AddUser">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:background="@drawable/fill"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/user_type"
-                android:checkedButton="@id/student"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                >
 
-                <RadioButton
-                    android:id="@+id/admin"
-                    android:text="Admin"
-                    android:layout_margin="10dp"
+                <TextView
+                    android:id="@+id/admins"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:id="@+id/tutor"
-                    android:text="Tutor"
-                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="Admins"
+                    android:paddingLeft="5dp"
+                    android:textStyle="bold"
+                    android:paddingRight="5dp"
+                    android:textSize="18sp" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/tutors"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:id="@+id/student"
-                    android:text="Student"
-                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tutors"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="18sp" />
+                <View
+                    android:layout_width="1dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/students"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RadioGroup>
-            <ImageView
-                android:id="@+id/from_xls"
-                android:src="@drawable/ic_folder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Students"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:background="@drawable/right_round"
+                    android:textStyle="bold"
+                    android:paddingRight="5dp"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,6 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:tint="@color/colorPrimary"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_done" />
 </android.support.design.widget.CoordinatorLayout>

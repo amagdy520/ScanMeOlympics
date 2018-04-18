@@ -150,9 +150,15 @@ public class Signup extends Activity implements UsersAdapter.OnUserClickListener
                 for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
                     User user = usersSnapshot.getValue(User.class);
                     user.setId(usersSnapshot.getKey());
-                    users.add(user);
+                    if(user.getEmail()==null){
+                        users.add(user);
+                    }
+
                 }
-                Log.e("Size", users.size() + "");
+                if(users.size()==0){
+                    Toast.makeText(Signup.this, "No Users", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 openUsersDialog();
 
             }

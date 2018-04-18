@@ -36,8 +36,8 @@ public class RoomDetails extends AppCompatActivity {
 
     @BindView(R.id.room_number)
     TextView roomNumberTextView;
-    @BindView(R.id.room_type)
-    TextView roomTypeTextView;
+    @BindView(R.id.room_floor)
+    TextView roomFloor;
     @BindView(R.id.room_latitude)
     TextView room_latitude;
     @BindView(R.id.room_longitude)
@@ -97,8 +97,8 @@ public class RoomDetails extends AppCompatActivity {
     }
 
     private void setRoomData() {
-        roomNumberTextView.setText(" " + room.getNumber() + " ");
-        roomTypeTextView.setText("Type: " + room.getType());
+        roomNumberTextView.setText(room.getType()+" " + room.getNumber());
+        roomFloor.setText("Floor: "+room.getFloor());
         room_latitude.setText("Latitude: " + room.getLatitude());
         room_longitude.setText("Longitude: " + room.getLatitude());
     }
