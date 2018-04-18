@@ -1,15 +1,19 @@
 package com.scan.me;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RoomDetails extends AppCompatActivity {
     public static final int RESERVE = 201;
@@ -46,21 +51,28 @@ public class RoomDetails extends AppCompatActivity {
     RecyclerView reservationRecyclerView;
     private DatabaseReference reference;
     private String today;
+    @BindView(R.id.room_image)
+    ImageView roomImage;
+    @BindView(R.id.reserve)
+    FloatingActionButton reservebutButton;
+
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
+        user = getIntent().getExtras().getParcelable(USER);
         ButterKnife.bind(this);
         roomId = getIntent().getExtras().getString(ROOM_ID);
-        user = getIntent().getExtras().getParcelable(USER);
         Calendar mcurrentTime = Calendar.getInstance();
         int year = mcurrentTime.get(Calendar.YEAR);
         int month = mcurrentTime.get(Calendar.MONTH);
         int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
         today = year + "-" + month + "-" + day;
+        if(!user.getType().equals(User.TUTOR)){
+            reservebutButton.setVisibility(View.GONE);
+        }
         getRoomData();
     }
 
@@ -97,31 +109,28 @@ public class RoomDetails extends AppCompatActivity {
     }
 
     private void setRoomData() {
-        roomNumberTextView.setText(room.getType()+" " + room.getNumber());
-        roomFloor.setText("Floor: "+room.getFloor());
+        roomNumberTextView.setText(room.getType() + " " + room.getNumber());
+        roomFloor.setText("Floor: " + room.getFloor());
         room_latitude.setText("Latitude: " + room.getLatitude());
         room_longitude.setText("Longitude: " + room.getLatitude());
-    }
+        if (room.getType().equals(Room.HALL)) {
+            Glide.with(this).load(R.drawable.hall).into(roomImage);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (user.getType().equals(User.TUTOR)) {
-            getMenuInflater().inflate(R.menu.reserve_menu, menu);
+        } else if (room.getType().equals(Room.LAB)) {
+            Glide.with(this).load(R.drawable.lab).into(roomImage);
+        } else {
+            Glide.with(this).load(R.drawable.stage).into(roomImage);
+
         }
-        return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        if (item.getItemId() == R.id.action_reserve) {
-            startActivityForResult(new Intent(this, ReserveActivity.class), RESERVE);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.reserve)
+    void openReserve() {
+        startActivityForResult(new Intent(this, ReserveActivity.class), RESERVE);
+
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -147,7 +156,7 @@ public class RoomDetails extends AppCompatActivity {
                         ArrayList<UserAttend> users = new ArrayList<UserAttend>();
                         for (DataSnapshot usersSnapshot : dataSnapshot.getChildren()) {
                             User user = usersSnapshot.getValue(User.class);
-                            users.add(new UserAttend(user.getId(), user.getUid(), user.getName(), user.getImage(),user.getHash(), false));
+                            users.add(new UserAttend(user.getId(), user.getUid(), user.getName(), user.getImage(), user.getHash(), false));
                         }
                         reserve(users, reservation);
 

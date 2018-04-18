@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.scan.me.R;
 import com.scan.me.Room;
 import com.scan.me.User.User;
@@ -63,12 +64,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.MyViewHolder
             Room room = roomList.get(position);
 
             number.setText(room.getType()+" "+room.getNumber());
-            if(room.getType().equals(Room.HALL)){
-             roomImage.setImageResource(R.drawable.hall);
-            }else if(room.getType().equals(Room.LAB)){
-                roomImage.setImageResource(R.drawable.lab);
-            }else {
-                roomImage.setImageResource(R.drawable.stage);
+            if (room.getType().equals(Room.HALL)) {
+                Glide.with(context).load(R.drawable.hall).into(roomImage);
+
+            } else if (room.getType().equals(Room.LAB)) {
+                Glide.with(context).load(R.drawable.lab).into(roomImage);
+            } else {
+                Glide.with(context).load(R.drawable.stage).into(roomImage);
 
             }
         }

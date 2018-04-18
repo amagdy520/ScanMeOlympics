@@ -108,12 +108,7 @@ public class AddUser extends AppCompatActivity {
             }
         });
     }
-    @OnClick(R.id.from_xls)
-    void openManger() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        startActivityForResult(intent, FROM_FOLDER);
-    }
+
 
 
 
@@ -123,6 +118,7 @@ public class AddUser extends AppCompatActivity {
            if(Validation.checkValidation(yearAutoCompleteTextView)
                    &&Validation.checkValidation(departmentAutoCompleteTextView)
                    &&Validation.checkValidation(sectionEditText)
+                   &&Validation.checkValidation(numberEditText)
                    &&Validation.checkValidation(nameEditText)){
                doUploadData();
            }
@@ -183,6 +179,7 @@ public class AddUser extends AppCompatActivity {
         yearAutoCompleteTextView.setVisibility(View.GONE);
         departmentAutoCompleteTextView.setVisibility(View.GONE);
         sectionEditText.setVisibility(View.GONE);
+        numberEditText.setVisibility(View.GONE);
         selected = TUTOR;
     }
 
@@ -197,6 +194,7 @@ public class AddUser extends AppCompatActivity {
         yearAutoCompleteTextView.setVisibility(View.GONE);
         departmentAutoCompleteTextView.setVisibility(View.GONE);
         sectionEditText.setVisibility(View.GONE);
+        numberEditText.setVisibility(View.GONE);
         selected = ADMIN;
 
     }
@@ -212,6 +210,7 @@ public class AddUser extends AppCompatActivity {
         yearAutoCompleteTextView.setVisibility(View.VISIBLE);
         departmentAutoCompleteTextView.setVisibility(View.VISIBLE);
         sectionEditText.setVisibility(View.VISIBLE);
+        numberEditText.setVisibility(View.VISIBLE);
         selected = STUDENT;
 
     }

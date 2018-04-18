@@ -11,7 +11,7 @@ public class Validation {
 
 
     public static boolean checkValidation(AutoCompleteTextView autoCompleteTextView) {
-        if (autoCompleteTextView.getText().equals("")) {
+        if (autoCompleteTextView.getText().toString().equals("")) {
             autoCompleteTextView.setError("Please fill this field");
             return false;
         }
@@ -19,7 +19,7 @@ public class Validation {
     }
 
     public static boolean checkValidation(EditText editText) {
-        if (editText.getText().equals("")) {
+        if (editText.getText().toString().equals("")) {
             editText.setError("Please fill this field");
             return false;
         }

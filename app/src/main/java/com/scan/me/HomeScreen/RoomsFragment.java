@@ -83,7 +83,7 @@ public class RoomsFragment extends Fragment implements RoomsAdapter.OnRoomClickL
     private void setRoomAdapter() {
         RoomsAdapter roomsAdapter = new RoomsAdapter(getActivity(), rooms, this);
         roomsRecyclerView.setAdapter(roomsAdapter);
-        roomsRecyclerView.setLayoutManager((new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)));
+        roomsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2,LinearLayoutManager.VERTICAL,false));
     }
 
     @OnClick(R.id.floating_room)
