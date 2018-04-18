@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,14 @@ public class UserDetails extends AppCompatActivity {
     TextView user_email;
     @BindView(R.id.user_code)
     TextView codeTextView;
+    @BindView(R.id.generate_code)
+    TextView generate_code;
+    @BindView(R.id.text_section)
+    TextView text_section;
+    @BindView(R.id.text_department)
+    TextView text_department;
+    @BindView(R.id.text_year)
+    TextView text_year;
 
     String userId;
     private User user;
@@ -86,6 +95,11 @@ public class UserDetails extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
                 setUserData();
 
+                if(user.getEmail ()!= null)
+                {
+                    codeTextView.setVisibility (View.GONE);
+                    generate_code.setVisibility (View.GONE);
+                }
             }
 
             @Override
@@ -98,11 +112,26 @@ public class UserDetails extends AppCompatActivity {
     private void setUserData() {
         nameTextView.setText(user.getName());
         typeTextView.setText(user.getType());
-        user_section.setText (user.getSection ());
-        user_year.setText (user.getYear ());
-        user_department.setText (user.getDepartment ());
+
+        if(!user.getType ().equals ("Student"))
+        {
+            text_section.setVisibility (View.GONE);
+            text_department.setVisibility (View.GONE);
+            text_year.setVisibility (View.GONE);
+            user_section.setVisibility (View.GONE);
+            user_year.setVisibility (View.GONE);
+            user_department.setVisibility (View.GONE);
+        }
+        else
+        {
+            user_section.setText (user.getSection ());
+            user_year.setText (user.getYear ());
+            user_department.setText (user.getDepartment ());
+        }
+
         user_email.setText (user.getEmail ());
         codeTextView.setText(user.getCode());
+
         if (user.getImage() != null) {
             GlideApp.with(this)
                     .load(user.getImage())

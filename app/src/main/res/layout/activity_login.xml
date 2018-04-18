@@ -5,13 +5,23 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-
+     android:background="@drawable/details"
     tools:context="com.scan.me.LoginScreen.LoginActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"/>
+
     <!--TODO Design -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+       android:layout_below="@+id/logo"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
@@ -21,7 +31,6 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="100dp"
             android:hint="Email">
 
             <EditText
