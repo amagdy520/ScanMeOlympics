@@ -261,7 +261,7 @@ public class LectureDetails extends AppCompatActivity implements AttendAdapter.O
                 if (Validation.checkValidation(year)
                         && Validation.checkValidation(department)
                         && Validation.checkValidation(section)) {
-                    String hash = year + "-" + department + "-" + section;
+                    String hash = year.getText().toString() + "-" + department.getText().toString() + "-" + section.getText().toString();
                     for (UserAttend userAttend : userAttends) {
                         if (hash.equals(userAttend.getHash())) {
                             Toast.makeText(LectureDetails.this, "Already Exists", Toast.LENGTH_SHORT).show();

@@ -55,6 +55,9 @@ public class RoomsFragment extends Fragment implements RoomsAdapter.OnRoomClickL
         View view = inflater.inflate(R.layout.fragment_rooms, container, false);
         ButterKnife.bind(this, view);
         getRooms();
+        if(!user.getType().equals(User.ADMIN)){
+            floating_room.setVisibility(View.GONE);
+        }
         return view;
     }
 
